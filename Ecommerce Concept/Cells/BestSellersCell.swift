@@ -7,12 +7,19 @@
 
 import UIKit
 
+protocol BestSellerCellDelegate: AnyObject {
+    func toggleIsFavoriteProperty(_ cell: UICollectionViewCell)
+}
+
 class BestSellerCell: UICollectionViewCell {
     
     static var reuseId: String = "BestSellerCell"
     
+    weak var delegate: BestSellerCellDelegate?
+    
     var isFavorite: Bool = false {
         didSet {
+            delegate?.toggleIsFavoriteProperty(self)
             if isFavorite {
                 likeButton.setImage(UIImage(named: "selected"), for: .normal)
             } else {

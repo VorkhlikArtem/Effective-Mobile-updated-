@@ -31,8 +31,13 @@
 		AC58786F293B8DE600271423 /* BestSellersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC58786E293B8DE600271423 /* BestSellersCell.swift */; };
 		AC587872293B98C200271423 /* mainData.json in Resources */ = {isa = PBXBuildFile; fileRef = AC587871293B98C100271423 /* mainData.json */; };
 		AC587874293B99A500271423 /* Bundle + Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC587873293B99A500271423 /* Bundle + Decodable.swift */; };
+		AC7B9866293E4A310084832A /* NSNotification.Name + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7B9865293E4A310084832A /* NSNotification.Name + Extension.swift */; };
+		AC7B9869293E698E0084832A /* ProductDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7B9868293E698E0084832A /* ProductDetailsViewController.swift */; };
+		AC7B986B293E6A4C0084832A /* ProductDetailsBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7B986A293E6A4C0084832A /* ProductDetailsBottomView.swift */; };
+		AC7B986D293E7BD00084832A /* RatingStarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7B986C293E7BD00084832A /* RatingStarView.swift */; };
+		AC7B986F293E893C0084832A /* RatingStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7B986E293E893C0084832A /* RatingStackView.swift */; };
 		ACA3A531293D395300F2EF19 /* SimpleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA3A530293D395300F2EF19 /* SimpleViewController.swift */; };
-		ACA3A533293D3D9E00F2EF19 /* FilteringTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA3A532293D3D9E00F2EF19 /* FilteringTableView.swift */; };
+		ACA3A533293D3D9E00F2EF19 /* FilterOptionsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA3A532293D3D9E00F2EF19 /* FilterOptionsModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,8 +67,13 @@
 		AC58786E293B8DE600271423 /* BestSellersCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestSellersCell.swift; sourceTree = "<group>"; };
 		AC587871293B98C100271423 /* mainData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = mainData.json; sourceTree = "<group>"; };
 		AC587873293B99A500271423 /* Bundle + Decodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle + Decodable.swift"; sourceTree = "<group>"; };
+		AC7B9865293E4A310084832A /* NSNotification.Name + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSNotification.Name + Extension.swift"; sourceTree = "<group>"; };
+		AC7B9868293E698E0084832A /* ProductDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsViewController.swift; sourceTree = "<group>"; };
+		AC7B986A293E6A4C0084832A /* ProductDetailsBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsBottomView.swift; sourceTree = "<group>"; };
+		AC7B986C293E7BD00084832A /* RatingStarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingStarView.swift; sourceTree = "<group>"; };
+		AC7B986E293E893C0084832A /* RatingStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingStackView.swift; sourceTree = "<group>"; };
 		ACA3A530293D395300F2EF19 /* SimpleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleViewController.swift; sourceTree = "<group>"; };
-		ACA3A532293D3D9E00F2EF19 /* FilteringTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilteringTableView.swift; sourceTree = "<group>"; };
+		ACA3A532293D3D9E00F2EF19 /* FilterOptionsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterOptionsModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,7 +119,7 @@
 			children = (
 				AC04F3F8293D1262008CFD18 /* FilterView.swift */,
 				AC04F3FA293D2267008CFD18 /* FilterTextFieldFormStackView.swift */,
-				ACA3A532293D3D9E00F2EF19 /* FilteringTableView.swift */,
+				ACA3A532293D3D9E00F2EF19 /* FilterOptionsModel.swift */,
 			);
 			path = FilterView;
 			sourceTree = "<group>";
@@ -137,6 +147,7 @@
 				AC58784E293B743A00271423 /* SceneDelegate.swift */,
 				AC587850293B743A00271423 /* MainViewController.swift */,
 				ACA3A530293D395300F2EF19 /* SimpleViewController.swift */,
+				AC7B9867293E69300084832A /* ProductDetailsVC */,
 				AC04F3F7293D1240008CFD18 /* FilterView */,
 				AC587866293B89BC00271423 /* Cells */,
 				AC04F3F2293CD339008CFD18 /* Headers */,
@@ -185,6 +196,7 @@
 			children = (
 				AC58786A293B8AB200271423 /* UIColor + Extension.swift */,
 				AC04F3E2293BB5CC008CFD18 /* UIFont + Extension.swift */,
+				AC7B9865293E4A310084832A /* NSNotification.Name + Extension.swift */,
 				AC04F3E7293BF789008CFD18 /* Font.xib */,
 				AC587873293B99A500271423 /* Bundle + Decodable.swift */,
 			);
@@ -197,6 +209,17 @@
 				AC587871293B98C100271423 /* mainData.json */,
 			);
 			path = Json;
+			sourceTree = "<group>";
+		};
+		AC7B9867293E69300084832A /* ProductDetailsVC */ = {
+			isa = PBXGroup;
+			children = (
+				AC7B9868293E698E0084832A /* ProductDetailsViewController.swift */,
+				AC7B986A293E6A4C0084832A /* ProductDetailsBottomView.swift */,
+				AC7B986E293E893C0084832A /* RatingStackView.swift */,
+				AC7B986C293E7BD00084832A /* RatingStarView.swift */,
+			);
+			path = ProductDetailsVC;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -274,9 +297,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ACA3A533293D3D9E00F2EF19 /* FilteringTableView.swift in Sources */,
+				AC7B9869293E698E0084832A /* ProductDetailsViewController.swift in Sources */,
+				ACA3A533293D3D9E00F2EF19 /* FilterOptionsModel.swift in Sources */,
 				AC04F3E3293BB5CC008CFD18 /* UIFont + Extension.swift in Sources */,
 				AC58786D293B8D6F00271423 /* HotSalesCell.swift in Sources */,
+				AC7B9866293E4A310084832A /* NSNotification.Name + Extension.swift in Sources */,
 				AC58786F293B8DE600271423 /* BestSellersCell.swift in Sources */,
 				AC58786B293B8AB200271423 /* UIColor + Extension.swift in Sources */,
 				AC587851293B743A00271423 /* MainViewController.swift in Sources */,
@@ -286,9 +311,12 @@
 				AC58784D293B743A00271423 /* AppDelegate.swift in Sources */,
 				AC04F3E6293BBCF2008CFD18 /* Constants.swift in Sources */,
 				AC587863293B850C00271423 /* NetworkManager.swift in Sources */,
+				AC7B986F293E893C0084832A /* RatingStackView.swift in Sources */,
+				AC7B986B293E6A4C0084832A /* ProductDetailsBottomView.swift in Sources */,
 				AC587865293B89B600271423 /* SelectCategoryCell.swift in Sources */,
 				AC04F3F9293D1262008CFD18 /* FilterView.swift in Sources */,
 				AC04F3FB293D2267008CFD18 /* FilterTextFieldFormStackView.swift in Sources */,
+				AC7B986D293E7BD00084832A /* RatingStarView.swift in Sources */,
 				ACA3A531293D395300F2EF19 /* SimpleViewController.swift in Sources */,
 				AC58784F293B743A00271423 /* SceneDelegate.swift in Sources */,
 				AC587861293B7E7100271423 /* Models.swift in Sources */,

@@ -26,13 +26,13 @@ class HeaderWithButton: UICollectionReusableView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        seeMoreButton.setTitle("see more", for: .normal)
+      //  seeMoreButton.setTitle("see more", for: .normal)
         setupConstraints()
     }
     
-    func configure(text: String) {
-        title.text = text
-
+    func configure(title: String, buttonText: String) {
+        self.title.text = title
+        seeMoreButton.setTitle(buttonText, for: .normal)
     }
     
     required init?(coder: NSCoder) {

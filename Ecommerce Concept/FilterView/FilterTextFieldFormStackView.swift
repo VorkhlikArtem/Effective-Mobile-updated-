@@ -9,8 +9,8 @@ import UIKit
 
 class FilterTextFieldFormStackView : UIStackView {
     
-    var tableHeightConstraint: NSLayoutConstraint?
-    
+    var filterOptionItems = [String]()
+
     lazy var filteringTable: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain )
         tableView.dataSource = self
@@ -51,28 +51,17 @@ class FilterTextFieldFormStackView : UIStackView {
     }()
     
     @objc func revealFilteringTable() {
-        
+        postNotification()
         filteringTable.translatesAutoresizingMaskIntoConstraints = false
-        guard let superView = self.superview?.superview else {return}
-        print(superView)
-        superView.addSubview(filteringTable)
+        guard let viewOfViewController = self.superview?.superview?.superview else {return}
+        print(viewOfViewController)
+        viewOfViewController.addSubview(filteringTable)
         NSLayoutConstraint.activate([
             filteringTable.topAnchor.constraint(equalTo: filterTextField.bottomAnchor, constant: 0),
             filteringTable.leadingAnchor.constraint(equalTo: filterTextField.leadingAnchor, constant: 0),
             filteringTable.trailingAnchor.constraint(equalTo: filterTextField.trailingAnchor, constant: 0),
-            
+            filteringTable.heightAnchor.constraint(equalToConstant: 150)
         ])
-        
-        tableHeightConstraint = filteringTable.heightAnchor.constraint(equalToConstant: 0)
-        tableHeightConstraint?.isActive = true
-        
-        
-        tableHeightConstraint?.constant = 150
-        UIView.animate(withDuration: 3, delay: 0, options: .curveEaseOut, animations: {
-            
-            superView.layoutIfNeeded()
-        }, completion: nil)
-        
         filteringTable.reloadData()
     }
     
@@ -88,17 +77,17 @@ class FilterTextFieldFormStackView : UIStackView {
         filterTextField.translatesAutoresizingMaskIntoConstraints = false
         filterTextField.heightAnchor.constraint(equalToConstant: 37).isActive = true
         filterTextField.delegate = self
-        
+        addObservers()
     }
     
-    var filterOptions = [String]()
+   
     
-    convenience init(title: String, filterOptions: [String]) {
+    convenience init(title: String, filterOptionItems: [String]) {
         self.init(frame: .zero)
         filterOptionTitle.text = title
-        filterTextField.text = "none"
+        filterTextField.text = "-none-"
         
-        self.filterOptions = ["filterOptions", "ddd", "www", "ttt"]
+        self.filterOptionItems = filterOptionItems
 
     }
     
@@ -107,36 +96,55 @@ class FilterTextFieldFormStackView : UIStackView {
         filteringTable.layer.cornerRadius = 5
     }
     
+    // MARK: - adding Observers
+    
+    func addObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(hideFilterTables), name: .hideFilterTables, object: nil)
+    }
+    
+    @objc func hideFilterTables() {
+        filteringTable.removeFromSuperview()
+    }
+    
+    // MARK: - Post Notification to hide all filter tables
+    func postNotification() {
+        NotificationCenter.default.post(name: .hideFilterTables, object: nil)
+    }
+        
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
 }
 
+// MARK: - UITableViewDataSource, UITableViewDelegate
 extension FilterTextFieldFormStackView: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filterOptions.count
+        return filterOptionItems.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = filteringTable.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         var content = cell.defaultContentConfiguration()
-        content.text = filterOptions[indexPath.row]
-        content.textProperties.color = .red
-        content.textProperties.font = UIFont(name: "MarkPro-Regular", size: 16)!
+        content.text = filterOptionItems[indexPath.row]
+        content.textProperties.color = .orangeColor
+        if let font = UIFont(name: "MarkPro-Regular", size: 16) {
+            content.textProperties.font = font
+        }
         cell.contentConfiguration = content
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        filterTextField.text = filterOptions[indexPath.row]
+        filterTextField.text = filterOptionItems[indexPath.row]
         filteringTable.removeFromSuperview()
     }
 }
 
 extension FilterTextFieldFormStackView: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        postNotification()
         revealFilteringTable()
         return false
     }

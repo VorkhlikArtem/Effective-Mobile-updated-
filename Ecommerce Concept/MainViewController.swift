@@ -93,23 +93,11 @@ class MainViewController: UIViewController {
         
     }
     
+    // MARK: -  NavigationBar & CollectionView setups
     private func setupNavigationBar() {
         let button = UIBarButtonItem(image: UIImage(named: "filter"), style: .plain , target: self, action: #selector(filterTapped))
         button.tintColor = #colorLiteral(red: 0.00884380471, green: 0.02381574176, blue: 0.1850150228, alpha: 1)
         navigationItem.rightBarButtonItem = button
-    }
-    
-    @objc func filterTapped() {
-        print("filter")
-        filterView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(filterView)
-        
-        NSLayoutConstraint.activate([
-            filterView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
-            filterView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
-            filterView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
-            filterView.heightAnchor.constraint(equalToConstant: 300)
-        ])
     }
     
     private func setupCollectionView() {
@@ -126,11 +114,22 @@ class MainViewController: UIViewController {
         
     }
     
+    @objc func filterTapped() {
+        print("filter")
+        filterView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(filterView)
+        
+        NSLayoutConstraint.activate([
+            filterView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            filterView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            filterView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
+        ])
+    }
+    
+    // MARK: - reloadData
     private func reloadData() {
         var snapShot = NSDiffableDataSourceSnapshot<ViewModel.Section, ViewModel.Item>()
         snapShot.appendSections(ViewModel.Section.allCases)  // change
-        
-       // snapShot.appendSections([ViewModel.Section.selectCategorySection])
         
         let selectCategoryItems = model.selectCategoryImageNames.map {ViewModel.Item.selectCategoryItem(category: $0) }
         snapShot.appendItems(selectCategoryItems, toSection: .selectCategorySection)
@@ -144,8 +143,6 @@ class MainViewController: UIViewController {
         dataSource?.apply(snapShot, animatingDifferences: true)
         
     }
-    
-
 }
 
 // MARK: - Create Data Source
@@ -168,6 +165,7 @@ extension MainViewController {
                 
             case .bestSellerItem(let bestSellersItem):
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BestSellerCell.reuseId, for: indexPath) as! BestSellerCell
+                cell.delegate = self
                 cell.configure(with: bestSellersItem)
                 return cell
             }
@@ -177,19 +175,15 @@ extension MainViewController {
             collectionView, kind, indexPath in
             
             let section = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
+            guard let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HeaderWithButton.reuseId, for: indexPath) as? HeaderWithButton else {return nil}
+            
             switch section {
             case .selectCategorySection:
-                
-                guard let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HeaderWithoutButton.reuseId, for: indexPath) as? HeaderWithoutButton else {return nil}
-                sectionHeader.configure(text: section.rawValue)
-                return sectionHeader
-                
+                sectionHeader.configure(title: section.rawValue, buttonText: "view all")
             default:
-               
-                guard let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HeaderWithButton.reuseId, for: indexPath) as? HeaderWithButton else {return nil}
-                sectionHeader.configure(text: section.rawValue)
-                return sectionHeader
+                sectionHeader.configure(title: section.rawValue, buttonText: "see more")
             }
+            return sectionHeader
         }
         return dataSource
     }
@@ -279,20 +273,16 @@ extension MainViewController {
     }
 }
 
+// MARK: - UICollectionViewDelegate
+
 extension MainViewController: UICollectionViewDelegate {
     
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-      //  print( collectionView.indexPathsForSelectedItems)
-       // print(indexPath)
-        
-        
+
         guard let section = dataSource.sectionIdentifier(for: indexPath.section) else {return}
         
         switch section {
         case .selectCategorySection:
-          
             if let cell = collectionView.cellForItem(at: IndexPath(row: selectedCategory, section: 0 )) as? SelectCategoryCell   {
                 cell.deselect()
             }
@@ -300,9 +290,6 @@ extension MainViewController: UICollectionViewDelegate {
             
             guard let cell = collectionView.cellForItem(at: indexPath) as? SelectCategoryCell else {return}
             cell.select()
-            
-
-            
         case .hotSalesSection:
             print("hotSalesSection")
         case .bestSellersSection:
@@ -310,6 +297,16 @@ extension MainViewController: UICollectionViewDelegate {
         }
     }
     
+}
+
+// MARK: - BestSellerCellDelegate
+
+extension MainViewController: BestSellerCellDelegate {
+    func toggleIsFavoriteProperty(_ cell: UICollectionViewCell) {
+        guard let indexPath = collectionView.indexPath(for: cell) else {return}
+        model.bestSellerItem[indexPath.row].isFavorites.toggle()
+        reloadData()
+    }
 }
 
 
