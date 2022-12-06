@@ -21,6 +21,9 @@ struct Constants {
         CategorySection(title: "Books", imageName: "books")
     ]
     
+    static let detailProductMenuButtonsNames = ["Shop", "Details", "Features"]
+    static let detailProductFeaturesImageNames = ["CPU", "camera", "ssd", "sd"]
+    
     static let selectCategoryCellWidth: CGFloat = 71
     static let bestSellersGroupAspectRatio: CGFloat = 227 / 376
     

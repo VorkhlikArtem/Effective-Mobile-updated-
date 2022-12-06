@@ -76,10 +76,10 @@
                     <segments>
                         <segment title="First"/>
                         <segment title="Second"/>
-                        <segment title="sasa"/>
+                        <segment title=""/>
                     </segments>
                     <color key="tintColor" name="AccentColor"/>
-                    <color key="selectedSegmentTintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="selectedSegmentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </segmentedControl>
                 <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" fixedFrame="YES" progress="0.59999999999999998" translatesAutoresizingMaskIntoConstraints="NO" id="4Yk-g7-hk3">
                     <rect key="frame" x="68" y="524" width="150" height="4"/>

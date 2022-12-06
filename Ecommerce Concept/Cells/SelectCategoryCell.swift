@@ -41,23 +41,7 @@ class SelectCategoryCell: UICollectionViewCell {
         deselect()
     }
     
-//    override var isSelected: Bool {
-//        didSet {
-//            print("select")
-//            if isSelected {
-//                circleView.backgroundColor = .orange
-//                categoryImageView.image = categoryImageView.image?.withTintColor(.white)
-//                categoryTitle.textColor = .orange
-//            } else {
-//                circleView.backgroundColor = .white
-//                categoryImageView.image = categoryImageView.image?.withTintColor(.gray)
-//                categoryTitle.textColor = .blackTextColor
-//            }
-//        }
-//    }
-//    
-  
-    
+
     
     func configure(with categoryModel: Constants.CategorySection) {
         categoryImageView.image = UIImage(named: categoryModel.imageName)?.withTintColor(.gray)

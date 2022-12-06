@@ -9,8 +9,9 @@ import Foundation
 
 class NetworkManager {
     static let mainUrlSting = "https://run.mocky.io/v3/654bd15e-b121-49ba-a588-960956b15175"
+    static let detailUrlString = "https://run.mocky.io/v3/6c14c560-15c6-4248-b9d2-b4508df7d4f5"
     
-    func fetchData(url: String, completion: @escaping (MainResponse)->()) {
+    func fetchData<T: Decodable>(url: String, type: T.Type, completion: @escaping (T)->()) {
         
         guard let url = URL(string: url) else { return }
         
@@ -21,7 +22,7 @@ class NetworkManager {
             do {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let courses = try decoder.decode(MainResponse.self, from: data)
+                let courses = try decoder.decode(T.self, from: data)
                 //print(courses)
                 completion(courses)
             } catch let error {
