@@ -24,9 +24,11 @@ class ProductDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .backgroundColor
+        setupNavigationBar()
         setupCollectionView()
         createDataSource()
-        networkManager.fetchData(url: NetworkManager.detailUrlString, type: ProductDetailModel.self) { productDetailModel in
+        networkManager.fetchData(url: NetworkManager.detailUrlString, type: ProductDetailModel.self) { [weak self] productDetailModel in
+            guard let self = self else {return}
             self.model = productDetailModel
             DispatchQueue.main.async {
                 self.setup()
@@ -35,6 +37,35 @@ class ProductDetailsViewController: UIViewController {
         }
         
        // reloadData()
+    }
+    
+    private func setupNavigationBar() {
+        let titleLabel = UILabel()
+        titleLabel.font = UIFont(name: "MarkPro-Medium", size: 18)
+        titleLabel.text = "Product Details"
+        
+        navigationItem.titleView = titleLabel
+        navigationItem.leftBarButtonItem = generateBarButtonItem(withColor: .blackTextColor, andImage: "back")
+        navigationItem.rightBarButtonItem = generateBarButtonItem(withColor: .orangeColor, andImage: "cart")
+    
+    }
+    
+    private func generateBarButtonItem(withColor color: UIColor, andImage image: String) -> UIBarButtonItem {
+        
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: image), for: .normal)
+        button.frame = .init(x: 0, y: 0, width: 37, height: 37)
+        button.backgroundColor = color
+        button.tintColor = .white
+        button.clipsToBounds = true
+        button.layer.cornerRadius = 10
+       
+        let barButtomItem = UIBarButtonItem(customView: button)
+        return barButtomItem
+    }
+    
+    @objc func goBack() {
+        navigationController?.popViewController(animated: true)
     }
     
     // MARK: - setup Collection View
@@ -88,7 +119,7 @@ class ProductDetailsViewController: UIViewController {
             productDetailsBottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             productDetailsBottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             productDetailsBottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            productDetailsBottomView.heightAnchor.constraint(equalToConstant: 300)
+            productDetailsBottomView.heightAnchor.constraint(equalToConstant: 400)
 
         ])
     }
@@ -148,7 +179,7 @@ extension ProductDetailsViewController {
 import SwiftUI
 struct ProductDetailsViewControllerProvider: PreviewProvider {
     static var previews: some View {
-        ContainerView().ignoresSafeArea(.all).previewInterfaceOrientation(.portrait)
+        ContainerView().ignoresSafeArea(.all)
     }
     struct ContainerView: UIViewControllerRepresentable {
         

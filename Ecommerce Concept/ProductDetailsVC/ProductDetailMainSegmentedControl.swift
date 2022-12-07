@@ -9,7 +9,7 @@ import UIKit
 
 class ProductDetailMainSegmentedControl: UIStackView {
     
-    let initialSelectedButtonIndex = 0
+    var initialSelectedButtonIndex = 0
     
     let menuButtonTitles = Constants.detailProductMenuButtonsNames
     

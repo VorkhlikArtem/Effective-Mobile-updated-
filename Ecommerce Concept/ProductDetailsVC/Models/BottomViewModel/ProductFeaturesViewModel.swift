@@ -8,28 +8,28 @@
 import Foundation
 
 protocol ProductFeaturesViewModelProtocol {
-    var CPU: String {get set}
-    var camera: String {get set}
- 
-    var sd: String {get set}
-    var ssd: String {get set}
-  
+    var productFeatures: [ProductFeature] {get set}
+}
+
+struct ProductFeature {
+    var name: String
+    var imageName: String
 }
 
 struct ProductFeaturesViewModel: ProductFeaturesViewModelProtocol {
-    var CPU: String
-    var camera: String
-   
-    var sd: String
-    var ssd: String
- 
+    var productFeatures: [ProductFeature]
 }
 
 extension ProductFeaturesViewModel {
     init(productDetailBottomViewModel: ProductDetailBottomViewModelProtocol) {
-        CPU = productDetailBottomViewModel.CPU
-        camera = productDetailBottomViewModel.camera
-        sd = productDetailBottomViewModel.sd
-        ssd = productDetailBottomViewModel.ssd
+        productFeatures = [ProductFeature(name: productDetailBottomViewModel.CPU,
+                                        imageName: "CPU"),
+                     ProductFeature(name: productDetailBottomViewModel.camera,
+                                                     imageName: "camera"),
+                     ProductFeature(name: productDetailBottomViewModel.ssd,
+                                                     imageName: "ssd"),
+                     ProductFeature(name: productDetailBottomViewModel.sd,
+                                                     imageName: "sd"),
+                     ]
     }
 }

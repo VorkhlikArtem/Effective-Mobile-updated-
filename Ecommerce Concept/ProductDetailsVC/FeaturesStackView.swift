@@ -20,7 +20,7 @@ class FeaturesStackView: UIStackView {
     }
     
     private func setupStackView(featuresViewModel: ProductFeaturesViewModelProtocol) {
-        for feature in detailProductFeaturesImageNames {
+        for feature in featuresViewModel.productFeatures {
             let vStack: UIStackView = {
                 let stack = UIStackView()
                 stack.axis = .vertical
@@ -28,14 +28,14 @@ class FeaturesStackView: UIStackView {
                 return stack
             }()
             
-            let featureImageView = UIImageView(image: UIImage(named: feature))
+            let featureImageView = UIImageView(image: UIImage(named: feature.imageName))
             featureImageView.contentMode = .scaleAspectFit
             
             let featureLabel: UILabel = {
                 let label = UILabel()
                 label.textColor = UIColor(red: 0.717, green: 0.717, blue: 0.717, alpha: 1)
                 label.font = UIFont(name: "MarkPro-Regular", size: 11)
-                label.text = featuresViewModel.CPU
+                label.text = feature.name
                 label.textAlignment = .center
                 return label
             }()

@@ -31,6 +31,10 @@
 		AC58786F293B8DE600271423 /* BestSellersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC58786E293B8DE600271423 /* BestSellersCell.swift */; };
 		AC587872293B98C200271423 /* mainData.json in Resources */ = {isa = PBXBuildFile; fileRef = AC587871293B98C100271423 /* mainData.json */; };
 		AC587874293B99A500271423 /* Bundle + Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC587873293B99A500271423 /* Bundle + Decodable.swift */; };
+		AC5B327F2940C985003DF38F /* ProductColorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5B327E2940C984003DF38F /* ProductColorViewModel.swift */; };
+		AC5B32812940CB04003DF38F /* ProductColorSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5B32802940CB04003DF38F /* ProductColorSegmentedControl.swift */; };
+		AC5B32832940CD3B003DF38F /* CapacitySegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5B32822940CD3B003DF38F /* CapacitySegmentedControl.swift */; };
+		AC5B32852940D5E6003DF38F /* ProductCapacityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5B32842940D5E6003DF38F /* ProductCapacityViewModel.swift */; };
 		AC7B9866293E4A310084832A /* NSNotification.Name + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7B9865293E4A310084832A /* NSNotification.Name + Extension.swift */; };
 		AC7B9869293E698E0084832A /* ProductDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7B9868293E698E0084832A /* ProductDetailsViewController.swift */; };
 		AC7B986B293E6A4C0084832A /* ProductDetailsBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7B986A293E6A4C0084832A /* ProductDetailsBottomView.swift */; };
@@ -75,6 +79,10 @@
 		AC58786E293B8DE600271423 /* BestSellersCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestSellersCell.swift; sourceTree = "<group>"; };
 		AC587871293B98C100271423 /* mainData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = mainData.json; sourceTree = "<group>"; };
 		AC587873293B99A500271423 /* Bundle + Decodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle + Decodable.swift"; sourceTree = "<group>"; };
+		AC5B327E2940C984003DF38F /* ProductColorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductColorViewModel.swift; sourceTree = "<group>"; };
+		AC5B32802940CB04003DF38F /* ProductColorSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductColorSegmentedControl.swift; sourceTree = "<group>"; };
+		AC5B32822940CD3B003DF38F /* CapacitySegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapacitySegmentedControl.swift; sourceTree = "<group>"; };
+		AC5B32842940D5E6003DF38F /* ProductCapacityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCapacityViewModel.swift; sourceTree = "<group>"; };
 		AC7B9865293E4A310084832A /* NSNotification.Name + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSNotification.Name + Extension.swift"; sourceTree = "<group>"; };
 		AC7B9868293E698E0084832A /* ProductDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsViewController.swift; sourceTree = "<group>"; };
 		AC7B986A293E6A4C0084832A /* ProductDetailsBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsBottomView.swift; sourceTree = "<group>"; };
@@ -237,6 +245,8 @@
 				AC7B986C293E7BD00084832A /* RatingStarView.swift */,
 				AC7B9870293F7BDF0084832A /* ProductDetailMainSegmentedControl.swift */,
 				AC7B987D293FD2AE0084832A /* FeaturesStackView.swift */,
+				AC5B32802940CB04003DF38F /* ProductColorSegmentedControl.swift */,
+				AC5B32822940CD3B003DF38F /* CapacitySegmentedControl.swift */,
 				AC7B9874293F9AA70084832A /* Models */,
 			);
 			path = ProductDetailsVC;
@@ -266,6 +276,8 @@
 			children = (
 				AC7B9877293FBBE50084832A /* ProductDetailBottomViewModel.swift */,
 				AC7B987B293FD1F40084832A /* ProductFeaturesViewModel.swift */,
+				AC5B327E2940C984003DF38F /* ProductColorViewModel.swift */,
+				AC5B32842940D5E6003DF38F /* ProductCapacityViewModel.swift */,
 			);
 			path = BottomViewModel;
 			sourceTree = "<group>";
@@ -348,11 +360,14 @@
 			files = (
 				AC7B9869293E698E0084832A /* ProductDetailsViewController.swift in Sources */,
 				AC7B9878293FBBE50084832A /* ProductDetailBottomViewModel.swift in Sources */,
+				AC5B327F2940C985003DF38F /* ProductColorViewModel.swift in Sources */,
 				ACA3A533293D3D9E00F2EF19 /* FilterOptionsModel.swift in Sources */,
 				AC04F3E3293BB5CC008CFD18 /* UIFont + Extension.swift in Sources */,
 				AC58786D293B8D6F00271423 /* HotSalesCell.swift in Sources */,
 				AC7B9866293E4A310084832A /* NSNotification.Name + Extension.swift in Sources */,
 				AC58786F293B8DE600271423 /* BestSellersCell.swift in Sources */,
+				AC5B32852940D5E6003DF38F /* ProductCapacityViewModel.swift in Sources */,
+				AC5B32832940CD3B003DF38F /* CapacitySegmentedControl.swift in Sources */,
 				AC58786B293B8AB200271423 /* UIColor + Extension.swift in Sources */,
 				AC587851293B743A00271423 /* MainViewController.swift in Sources */,
 				AC04F3F6293CDC0C008CFD18 /* HeaderWithoutButton.swift in Sources */,
@@ -362,6 +377,7 @@
 				AC58784D293B743A00271423 /* AppDelegate.swift in Sources */,
 				AC04F3E6293BBCF2008CFD18 /* Constants.swift in Sources */,
 				AC587863293B850C00271423 /* NetworkManager.swift in Sources */,
+				AC5B32812940CB04003DF38F /* ProductColorSegmentedControl.swift in Sources */,
 				AC7B9882293FE5F10084832A /* Section&ItemCVModels.swift in Sources */,
 				AC7B987E293FD2AE0084832A /* FeaturesStackView.swift in Sources */,
 				AC7B986F293E893C0084832A /* RatingStackView.swift in Sources */,

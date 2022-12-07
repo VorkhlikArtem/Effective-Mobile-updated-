@@ -27,9 +27,47 @@ class ProductDetailsBottomView: UIView {
         return button
     }()
     
+    let colorCapacityLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Select color and capacity"
+        label.font = UIFont(name: "MarkPro-Medium", size: 16)
+        label.textColor = .blackTextColor
+        return label
+    }()
+    
     var ratingStackView: RatingStackView!
     let mainSegmentedControl = ProductDetailMainSegmentedControl()
     var featuresStackView: FeaturesStackView!
+    var colorSegmentedControl: ProductColorSegmentedControl!
+    var capacitySegmentedControl: CapacitySegmentedControl!
+    
+//    let addToCartButton: UIButton = {
+//        let button = UIButton(type: .system)
+//        button.translatesAutoresizingMaskIntoConstraints = false
+//        button.setTitle("Add to cart", for: .normal)
+//        button.tintColor = .white
+//        button.backgroundColor = .orangeColor
+//        button.subtitleLabel?.text = "1000"
+//        button.subtitleLabel?.textColor = .white
+//        return button
+//    }()
+    
+    let addToCartButton: UIButton = {
+        let button = UIButton.init(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.configuration = .filled()
+        button.configuration?.title = "AAAAAAa"
+        button.configuration?.titleAlignment = .leading
+        button.titleLabel?.font = UIFont(name: "MarkPro-Bold", size: 20)
+       // button.configuration?.subtitle = "23232"
+        button.configuration?.baseBackgroundColor = .orangeColor
+        button.configuration?.contentInsets = .init(top: 14, leading: 45, bottom: 15, trailing: 0)
+        button.titleLabel?.font = UIFont(name: "MarkPro-Bold", size: 20)
+        
+        button.contentHorizontalAlignment = .left
+        return button
+    }()
     
     init(productDetailBottomViewModel: ProductDetailBottomViewModelProtocol) {
         super.init(frame: .zero)
@@ -40,10 +78,14 @@ class ProductDetailsBottomView: UIView {
         let productFeaturesViewModel = ProductFeaturesViewModel(productDetailBottomViewModel: productDetailBottomViewModel)
         featuresStackView = FeaturesStackView(featuresViewModel: productFeaturesViewModel)
         
+        let productColorViewModel = ProductColorViewModel(hexStrings: productDetailBottomViewModel.color)
+        colorSegmentedControl = ProductColorSegmentedControl(productColorViewModel: productColorViewModel)
+        
+        let productCapacityViewModel = ProductCapacityViewModel(capacities: productDetailBottomViewModel.capacity)
+        capacitySegmentedControl = CapacitySegmentedControl(productCapacityViewModel: productCapacityViewModel)
+        
         setupConstraints()
         
-
-    
     }
     
     override func layoutSubviews() {
@@ -54,11 +96,11 @@ class ProductDetailsBottomView: UIView {
         layer.shadowOffset = .zero
         layer.shadowRadius = 10
         
-        likeButton.layer.cornerRadius = 10
-        likeButton.layer.shadowOpacity = 0.2
+        likeButton.layer.cornerRadius = 5
+        likeButton.layer.shadowOpacity = 0.1
         likeButton.layer.shadowColor = UIColor.black.cgColor
         likeButton.layer.shadowOffset = .zero
-        likeButton.layer.shadowRadius = 10
+  
     }
     
     private func  setupConstraints() {
@@ -101,6 +143,40 @@ class ProductDetailsBottomView: UIView {
             featuresStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -27),
       
         ])
+        
+        self.addSubview(colorCapacityLabel)
+        NSLayoutConstraint.activate([
+            colorCapacityLabel.topAnchor.constraint(equalTo: featuresStackView.bottomAnchor, constant: 30),
+            colorCapacityLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
+        ])
+        
+        colorSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(colorSegmentedControl)
+        NSLayoutConstraint.activate([
+            colorSegmentedControl.topAnchor.constraint(equalTo: colorCapacityLabel.bottomAnchor, constant: 14),
+            colorSegmentedControl.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 35),
+            colorSegmentedControl.heightAnchor.constraint(equalToConstant: 40)
+      
+        ])
+        
+        capacitySegmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(capacitySegmentedControl)
+        NSLayoutConstraint.activate([
+            capacitySegmentedControl.centerYAnchor.constraint(equalTo: colorSegmentedControl.centerYAnchor),
+            capacitySegmentedControl.leadingAnchor.constraint(equalTo: colorSegmentedControl.trailingAnchor, constant: 58),
+            capacitySegmentedControl.heightAnchor.constraint(equalToConstant: 30)
+      
+        ])
+        
+        self.addSubview(addToCartButton)
+        NSLayoutConstraint.activate([
+         
+            addToCartButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
+            addToCartButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
+            addToCartButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
+           // addToCartButton.heightAnchor.constraint(equalToConstant: 30)
+      
+        ])
     }
     
     required init?(coder: NSCoder) {
@@ -113,7 +189,7 @@ class ProductDetailsBottomView: UIView {
 import SwiftUI
 struct ProductDetailsBottomViewProvider: PreviewProvider {
     static var previews: some View {
-        ContainerView().ignoresSafeArea(.all).previewInterfaceOrientation(.landscapeLeft)
+        ContainerView().ignoresSafeArea(.all)
     }
     struct ContainerView: UIViewControllerRepresentable {
         

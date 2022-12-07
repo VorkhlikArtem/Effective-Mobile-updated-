@@ -293,10 +293,19 @@ extension MainViewController: UICollectionViewDelegate {
         case .hotSalesSection:
             print("hotSalesSection")
         case .bestSellersSection:
+            showNextVC()
             print("bestSellersSection")
         }
     }
     
+}
+
+// MARK: - Routing
+extension MainViewController {
+    private func showNextVC() {
+        let productDetailVC = ProductDetailsViewController()
+        navigationController?.pushViewController(productDetailVC, animated: true)
+    }
 }
 
 // MARK: - BestSellerCellDelegate
