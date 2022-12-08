@@ -31,7 +31,7 @@ class ProductDetailsViewController: UIViewController {
             guard let self = self else {return}
             self.model = productDetailModel
             DispatchQueue.main.async {
-                self.setup()
+                self.setupButtomView()
                 self.reloadData()
             }
         }
@@ -47,7 +47,6 @@ class ProductDetailsViewController: UIViewController {
         navigationItem.titleView = titleLabel
         navigationItem.leftBarButtonItem = generateBarButtonItem(withColor: .blackTextColor, andImage: "back")
         navigationItem.rightBarButtonItem = generateBarButtonItem(withColor: .orangeColor, andImage: "cart")
-    
     }
     
     private func generateBarButtonItem(withColor color: UIColor, andImage image: String) -> UIBarButtonItem {
@@ -70,13 +69,9 @@ class ProductDetailsViewController: UIViewController {
     
     // MARK: - setup Collection View
     private func setupCollectionView() {
-//        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
-//        collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-//        collectionView.backgroundColor = .yellow
-//
-  //      view.addSubview(collectionView)
+
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCompositionalLayout())
-        collectionView.backgroundColor = .yellow
+        collectionView.backgroundColor = .backgroundColor
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(collectionView)
         NSLayoutConstraint.activate([
@@ -86,9 +81,8 @@ class ProductDetailsViewController: UIViewController {
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             
         ])
-        
-        collectionView.register(HotSalesCell.self, forCellWithReuseIdentifier: HotSalesCell.reuseId)
-        
+        collectionView.isScrollEnabled = false
+        collectionView.register(ProductDetailCVCell.self, forCellWithReuseIdentifier: ProductDetailCVCell.reuseId)
     }
     
     private func reloadData() {
@@ -105,7 +99,7 @@ class ProductDetailsViewController: UIViewController {
     
     
     // MARK: - setup Bottom View
-    func setup() {
+    func setupButtomView() {
         let productDetailBottomViewModel = ProductDetailBottomViewModel(productDetailModel: model)
         productDetailsBottomView = ProductDetailsBottomView(productDetailBottomViewModel: productDetailBottomViewModel)
         
@@ -119,7 +113,7 @@ class ProductDetailsViewController: UIViewController {
             productDetailsBottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             productDetailsBottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             productDetailsBottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            productDetailsBottomView.heightAnchor.constraint(equalToConstant: 400)
+           // productDetailsBottomView.heightAnchor.constraint(equalToConstant: 400)
 
         ])
     }
@@ -131,7 +125,7 @@ extension ProductDetailsViewController {
     
     private func createDataSource() {
         dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, item in
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HotSalesCell.reuseId, for: indexPath) as? HotSalesCell else { fatalError("Unable to dequeue cell")}
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductDetailCVCell.reuseId, for: indexPath) as? ProductDetailCVCell else { fatalError("Unable to dequeue cell")}
             cell.configure(with: item.imageUrlString)
             return cell
         })
@@ -157,7 +151,7 @@ extension ProductDetailsViewController {
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPagingCentered
         section.interGroupSpacing = 10
-        section.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0)
+        section.contentInsets = .init(top: 30, leading: 0, bottom: 0, trailing: 0)
         
         section.visibleItemsInvalidationHandler = { (items, offset, environment) in
             items.forEach { item in
@@ -174,22 +168,22 @@ extension ProductDetailsViewController {
 }
 
 
-
-//MARK: - SwiftUI
-import SwiftUI
-struct ProductDetailsViewControllerProvider: PreviewProvider {
-    static var previews: some View {
-        ContainerView().ignoresSafeArea(.all)
-    }
-    struct ContainerView: UIViewControllerRepresentable {
-        
-        let viewController = UINavigationController(rootViewController: ProductDetailsViewController())
-        
-        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-        }
-
-        func makeUIViewController(context: Context) -> some UIViewController {
-            return viewController
-        }
-    }
-}
+//
+////MARK: - SwiftUI
+//import SwiftUI
+//struct ProductDetailsViewControllerProvider: PreviewProvider {
+//    static var previews: some View {
+//        ContainerView().ignoresSafeArea(.all)
+//    }
+//    struct ContainerView: UIViewControllerRepresentable {
+//
+//        let viewController = UINavigationController(rootViewController: ProductDetailsViewController())
+//
+//        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+//        }
+//
+//        func makeUIViewController(context: Context) -> some UIViewController {
+//            return viewController
+//        }
+//    }
+//}

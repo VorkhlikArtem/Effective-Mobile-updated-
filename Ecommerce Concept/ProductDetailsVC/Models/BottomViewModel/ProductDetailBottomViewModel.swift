@@ -46,4 +46,12 @@ extension ProductDetailBottomViewModel {
         ssd = productDetailModel.ssd
         title = productDetailModel.title
     }
+    
+   
+}
+
+extension ProductDetailBottomViewModelProtocol {
+    var formatedPrice: String {
+        return "$" + String(format: "%.02f", Float(price))
+    }
 }

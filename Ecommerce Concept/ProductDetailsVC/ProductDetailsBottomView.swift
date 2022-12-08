@@ -9,7 +9,7 @@ import UIKit
 
 class ProductDetailsBottomView: UIView {
     
-    
+    // MARK: - View Properties
     let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -22,8 +22,9 @@ class ProductDetailsBottomView: UIView {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: "unselected"), for: .normal)
-        button.tintColor = .blackTextColor
-        button.backgroundColor = .white
+       // button.tintColor = .blackTextColor
+       // button.backgroundColor = .white
+        button.addTarget(self, action: #selector(likeTapped), for: .touchUpInside)
         return button
     }()
     
@@ -42,33 +43,42 @@ class ProductDetailsBottomView: UIView {
     var colorSegmentedControl: ProductColorSegmentedControl!
     var capacitySegmentedControl: CapacitySegmentedControl!
     
-//    let addToCartButton: UIButton = {
-//        let button = UIButton(type: .system)
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//        button.setTitle("Add to cart", for: .normal)
-//        button.tintColor = .white
-//        button.backgroundColor = .orangeColor
-//        button.subtitleLabel?.text = "1000"
-//        button.subtitleLabel?.textColor = .white
-//        return button
-//    }()
     
     let addToCartButton: UIButton = {
         let button = UIButton.init(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.configuration = .filled()
-        button.configuration?.title = "AAAAAAa"
+        let fontAttribute = [NSAttributedString.Key.font: UIFont(name: "MarkPro-Bold", size: 20) as Any]
+        let nsString = NSAttributedString(string: "Add to cart", attributes: fontAttribute)
+        button.configuration?.attributedTitle = AttributedString.init(nsString)
         button.configuration?.titleAlignment = .leading
-        button.titleLabel?.font = UIFont(name: "MarkPro-Bold", size: 20)
-       // button.configuration?.subtitle = "23232"
         button.configuration?.baseBackgroundColor = .orangeColor
         button.configuration?.contentInsets = .init(top: 14, leading: 45, bottom: 15, trailing: 0)
-        button.titleLabel?.font = UIFont(name: "MarkPro-Bold", size: 20)
-        
         button.contentHorizontalAlignment = .left
+        
         return button
     }()
     
+    let priceLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont(name: "MarkPro-Bold", size: 20)
+        label.textColor = .white
+        return label
+    }()
+    
+    // MARK: - Data Properties
+    var isFavorite = false {
+        didSet {
+            if isFavorite {
+               selectedLikeButton()
+            } else {
+               unselectedLikeButton()
+            }
+        }
+    }
+    
+    // MARK: - Init
     init(productDetailBottomViewModel: ProductDetailBottomViewModelProtocol) {
         super.init(frame: .zero)
        
@@ -83,6 +93,14 @@ class ProductDetailsBottomView: UIView {
         
         let productCapacityViewModel = ProductCapacityViewModel(capacities: productDetailBottomViewModel.capacity)
         capacitySegmentedControl = CapacitySegmentedControl(productCapacityViewModel: productCapacityViewModel)
+        
+        priceLabel.text = productDetailBottomViewModel.formatedPrice
+        isFavorite = productDetailBottomViewModel.isFavorites
+        if productDetailBottomViewModel.isFavorites {
+            selectedLikeButton()
+        } else {
+            unselectedLikeButton()
+        }
         
         setupConstraints()
         
@@ -103,6 +121,23 @@ class ProductDetailsBottomView: UIView {
   
     }
     
+    // MARK: - Like button
+    @objc private func likeTapped(button: UIButton) {
+        isFavorite.toggle()
+    }
+    
+    private func unselectedLikeButton() {
+        likeButton.backgroundColor = .white
+        likeButton.tintColor = .blackTextColor
+    }
+    
+    private func selectedLikeButton() {
+        likeButton.backgroundColor = .blackTextColor
+        likeButton.tintColor = .white
+    }
+    
+    
+    // MARK: - setup Constraints
     private func  setupConstraints() {
         self.addSubview(titleLabel)
         NSLayoutConstraint.activate([
@@ -173,9 +208,16 @@ class ProductDetailsBottomView: UIView {
          
             addToCartButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
             addToCartButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
-            addToCartButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
-           // addToCartButton.heightAnchor.constraint(equalToConstant: 30)
+            addToCartButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -30),
+            addToCartButton.topAnchor.constraint(equalTo: colorSegmentedControl.bottomAnchor, constant: 27)
       
+        ])
+        
+        self.addSubview(priceLabel)
+        NSLayoutConstraint.activate([
+            priceLabel.trailingAnchor.constraint(equalTo: addToCartButton.trailingAnchor, constant: -38),
+            priceLabel.bottomAnchor.constraint(equalTo: addToCartButton.bottomAnchor, constant: -15),
+        
         ])
     }
     
