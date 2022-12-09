@@ -9,90 +9,89 @@ import UIKit
 
 class CartTableViewController: UIViewController {
     
-    var cartItems = [CartCellViewModel]()
-   // var bottomCartViewModel : CartBottomViewModelProtocol!
-    
     var tableView: UITableView!
     
     var viewModel: CartTableViewModelProtocol!
     let bottomCartView = CartBottomView()
 
-
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
-        
-        tableView = UITableView(frame: view.bounds)
-        view.addSubview(tableView)
+        tableView = UITableView()
+        view.addSubviewWithWholeFilling(subview: tableView)
         self.tableView.dataSource = self
         tableView.delegate = self
-
-        viewModel = CartTableViewModel()
-        viewModel.fetchDataCallback = { [unowned self] viewModel in
-            self.cartItems = viewModel.cartItems
-            DispatchQueue.main.async {
-              
-                self.tableView.reloadData()
-                self.bottomCartView.configure(with: viewModel.bottomCartViewModel)
-            }
-           
-        }
-        
-        viewModel.countChangeCallback = {[unowned self] totalString in
-            self.bottomCartView.configureTotalPrice(with: totalString)
-        }
-        
+        self.navigationController?.tabBarItem.badgeColor = .blackTextColor
         setConstraints()
         tableView.register(CartTVCell.self, forCellReuseIdentifier: CartTVCell.reuseId)
+        tableView.backgroundColor = .blackTextColor
+        
+//        self.bottomCartView.configure(with: viewModel.bottomCartViewModel)
+//        self.navigationController?.tabBarItem.badgeValue = viewModel.totalCountString
+//        self.tabBarController?.tabBar.items?[1].badgeValue = viewModel.totalCountString
+//        self.navigationController?.tabBarController?.tabBar.items?[1].badgeValue = viewModel.totalCountString
+        
+        viewModel.fetchDataCallback = {[unowned self] viewModel in
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+                self.bottomCartView.configure(with: viewModel.bottomCartViewModel)
+                self.navigationController?.tabBarItem.badgeValue = viewModel.totalCountString
+                self.tabBarController?.tabBar.items?[1].badgeValue = viewModel.totalCountString
+            }
+        }
+        viewModel.getData()
+        
+
+        viewModel.countChangeCallback = {[unowned self] totalPriceString, totalCountString in
+            DispatchQueue.main.async {
+                self.bottomCartView.configureTotalPrice(with: totalPriceString)
+                self.navigationController?.tabBarItem.badgeValue = totalCountString
+            }
+        }
+     
     }
     
     private func setConstraints() {
-        bottomCartView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(bottomCartView)
-        NSLayoutConstraint.activate([
-
-            bottomCartView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            bottomCartView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-           // bottomCartView.heightAnchor.constraint(equalToConstant: 216),
-            bottomCartView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-            
-        ])
+        let tabBarHeight = tabBarController?.tabBar.frame.height ?? 0
+        view.addSubviewAtTheBottom(subview: bottomCartView, bottomOffset: tabBarHeight)
     }
-
-    
 }
 
+// MARK: -  UITableViewDataSource, UITableViewDelegate
 extension CartTableViewController: UITableViewDataSource, UITableViewDelegate {
-    // MARK: - Table view data source
-
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cartItems.count
+        return viewModel.cartItems.count
     }
 
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CartTVCell.reuseId, for: indexPath) as! CartTVCell
-        let cellItem = cartItems[indexPath.row]
+        let cellItem = viewModel.cartItems[indexPath.row]
         cell.delegate = self
         cell.configure(with: cellItem)
-
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 135
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+    }
 }
 
 extension CartTableViewController: CartTVCellDelegate {
+    
     func countChanged(_ cell: UITableViewCell, count: Int) {
         guard let indexPath = tableView.indexPath(for: cell) else {return}
         viewModel.countChanged(indexOfItem: indexPath.row, count: count)
-        
     }
-
+    
+    func deleteCell(_ cell: UITableViewCell) {
+        guard let indexPath = tableView.indexPath(for: cell) else {return}
+        viewModel.deleteItem(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+    }
 }
 
 

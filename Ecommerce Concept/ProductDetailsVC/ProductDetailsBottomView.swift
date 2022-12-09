@@ -208,7 +208,7 @@ class ProductDetailsBottomView: UIView {
          
             addToCartButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
             addToCartButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
-            addToCartButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -30),
+            addToCartButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
             addToCartButton.topAnchor.constraint(equalTo: colorSegmentedControl.bottomAnchor, constant: 27)
       
         ])

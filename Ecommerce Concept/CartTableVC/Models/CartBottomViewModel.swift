@@ -26,6 +26,6 @@ extension CartBottomViewModel {
 
 extension CartBottomViewModelProtocol {
     var formattedPriceString: String {
-        return totalPrice.formattedWithSeparator
+        return "$\(totalPrice.formattedWithSeparator) us"
     }
 }

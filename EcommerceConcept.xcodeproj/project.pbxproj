@@ -26,6 +26,9 @@
 		AC48427D294279F000090D5E /* CartBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC48427C294279EF00090D5E /* CartBottomView.swift */; };
 		AC48427F2942806400090D5E /* CartBottomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC48427E2942806400090D5E /* CartBottomViewModel.swift */; };
 		AC484282294295B300090D5E /* CartCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC484281294295B300090D5E /* CartCellViewModel.swift */; };
+		AC484284294362BC00090D5E /* UIView + Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC484283294362BB00090D5E /* UIView + Constraints.swift */; };
+		AC4842862943646F00090D5E /* UIButton + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4842852943646F00090D5E /* UIButton + Extension.swift */; };
+		AC48428829437ADE00090D5E /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC48428729437ADE00090D5E /* MainTabBarController.swift */; };
 		AC58784D293B743A00271423 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC58784C293B743A00271423 /* AppDelegate.swift */; };
 		AC58784F293B743A00271423 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC58784E293B743A00271423 /* SceneDelegate.swift */; };
 		AC587851293B743A00271423 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC587850293B743A00271423 /* MainViewController.swift */; };
@@ -84,6 +87,9 @@
 		AC48427C294279EF00090D5E /* CartBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartBottomView.swift; sourceTree = "<group>"; };
 		AC48427E2942806400090D5E /* CartBottomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartBottomViewModel.swift; sourceTree = "<group>"; };
 		AC484281294295B300090D5E /* CartCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartCellViewModel.swift; sourceTree = "<group>"; };
+		AC484283294362BB00090D5E /* UIView + Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Constraints.swift"; sourceTree = "<group>"; };
+		AC4842852943646F00090D5E /* UIButton + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton + Extension.swift"; sourceTree = "<group>"; };
+		AC48428729437ADE00090D5E /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		AC587849293B743A00271423 /* EcommerceConcept.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EcommerceConcept.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC58784C293B743A00271423 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AC58784E293B743A00271423 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -216,6 +222,7 @@
 			children = (
 				AC58784C293B743A00271423 /* AppDelegate.swift */,
 				AC58784E293B743A00271423 /* SceneDelegate.swift */,
+				AC48428729437ADE00090D5E /* MainTabBarController.swift */,
 				AC587850293B743A00271423 /* MainViewController.swift */,
 				ACA3A530293D395300F2EF19 /* SimpleViewController.swift */,
 				AC413D612942283F0070DB57 /* CartTableVC */,
@@ -269,6 +276,8 @@
 				AC58786A293B8AB200271423 /* UIColor + Extension.swift */,
 				AC04F3E2293BB5CC008CFD18 /* UIFont + Extension.swift */,
 				AC48427A2942790100090D5E /* UILabel + Extension.swift */,
+				AC4842852943646F00090D5E /* UIButton + Extension.swift */,
+				AC484283294362BB00090D5E /* UIView + Constraints.swift */,
 				AC48427829425CAB00090D5E /* Formatter.swift */,
 				AC7B9865293E4A310084832A /* NSNotification.Name + Extension.swift */,
 				AC413D5F29412FB60070DB57 /* assas.storyboard */,
@@ -421,6 +430,7 @@
 				AC58786D293B8D6F00271423 /* HotSalesCell.swift in Sources */,
 				AC7B9866293E4A310084832A /* NSNotification.Name + Extension.swift in Sources */,
 				AC58786F293B8DE600271423 /* BestSellersCell.swift in Sources */,
+				AC48428829437ADE00090D5E /* MainTabBarController.swift in Sources */,
 				AC5B32852940D5E6003DF38F /* ProductCapacityViewModel.swift in Sources */,
 				AC5B32832940CD3B003DF38F /* CapacitySegmentedControl.swift in Sources */,
 				AC58786B293B8AB200271423 /* UIColor + Extension.swift in Sources */,
@@ -434,6 +444,7 @@
 				AC7B987A293FBF560084832A /* ProductDetailCollectionViewViewModel.swift in Sources */,
 				AC58784D293B743A00271423 /* AppDelegate.swift in Sources */,
 				AC69E5E12942357700FDD20A /* CartTableViewModel.swift in Sources */,
+				AC4842862943646F00090D5E /* UIButton + Extension.swift in Sources */,
 				AC04F3E6293BBCF2008CFD18 /* Constants.swift in Sources */,
 				AC587863293B850C00271423 /* NetworkManager.swift in Sources */,
 				AC48427929425CAB00090D5E /* Formatter.swift in Sources */,
@@ -441,6 +452,7 @@
 				AC5B32812940CB04003DF38F /* ProductColorSegmentedControl.swift in Sources */,
 				AC7B9882293FE5F10084832A /* Section&ItemCVModels.swift in Sources */,
 				AC7B987E293FD2AE0084832A /* FeaturesStackView.swift in Sources */,
+				AC484284294362BC00090D5E /* UIView + Constraints.swift in Sources */,
 				AC48427B2942790100090D5E /* UILabel + Extension.swift in Sources */,
 				AC7B986F293E893C0084832A /* RatingStackView.swift in Sources */,
 				AC7B9871293F7BDF0084832A /* ProductDetailMainSegmentedControl.swift in Sources */,

@@ -9,6 +9,7 @@ import UIKit
 
 protocol CartTVCellDelegate: AnyObject {
     func countChanged(_ cell: UITableViewCell, count: Int)
+    func deleteCell(_ cell: UITableViewCell)
 }
 
 
@@ -23,7 +24,7 @@ class CartTVCell: UITableViewCell {
     let modelName: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "MarkPro-Medium", size: 20)
-        label.textColor = .blackTextColor
+        label.textColor = .white
         label.numberOfLines = 2
         return label
     }()
@@ -37,15 +38,18 @@ class CartTVCell: UITableViewCell {
     
     let stepper = CustomStepper()
     
+    let deleteButton = UIButton(image: "delete", imageColor: #colorLiteral(red: 0.2123073339, green: 0.2123567462, blue: 0.3040331602, alpha: 1))
+    
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        backgroundColor = .yellow
+        backgroundColor = .blackTextColor
         clipsToBounds = false
         productImageView.contentMode = .scaleAspectFill
         
         stepper.delegate = self
+        deleteButton.addTarget(self, action: #selector(deleteTapped), for: .touchUpInside)
         setupConstraints()
     }
     
@@ -63,8 +67,7 @@ class CartTVCell: UITableViewCell {
         super.layoutSubviews()
         productImageView.clipsToBounds = true
         productImageView.layer.cornerRadius = 10
-        
-  
+
     }
     
 
@@ -74,10 +77,14 @@ class CartTVCell: UITableViewCell {
         modelName.text = cartCellItem.title
     }
     
+    @objc private func deleteTapped() {
+        delegate?.deleteCell(self)
+    }
+    
     func setupConstraints() {
         
         productImageView.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(productImageView)
+        self.contentView.addSubview(productImageView)
         NSLayoutConstraint.activate([
           
             productImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 23),
@@ -87,11 +94,20 @@ class CartTVCell: UITableViewCell {
 
         ])
         
+        deleteButton.translatesAutoresizingMaskIntoConstraints = false
+        self.contentView.addSubview(deleteButton)
+        NSLayoutConstraint.activate([
+          
+            deleteButton.centerYAnchor.constraint(equalTo: productImageView.centerYAnchor),
+            deleteButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -32),
+
+        ])
+        
         stepper.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(stepper)
         NSLayoutConstraint.activate([
             stepper.centerYAnchor.constraint(equalTo: productImageView.centerYAnchor),
-            stepper.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -21),
+            stepper.trailingAnchor.constraint(equalTo: deleteButton.leadingAnchor, constant: -17),
             stepper.heightAnchor.constraint(equalToConstant: 68),
             stepper.widthAnchor.constraint(equalToConstant: 26),
         ])
@@ -102,11 +118,11 @@ class CartTVCell: UITableViewCell {
         vStack.spacing = 6
 
         vStack.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(vStack)
+        self.contentView.addSubview(vStack)
         NSLayoutConstraint.activate([
             vStack.leadingAnchor.constraint(equalTo: productImageView.trailingAnchor, constant: 15),
             vStack.bottomAnchor.constraint(equalTo: productImageView.bottomAnchor, constant: -6),
-            vStack.trailingAnchor.constraint(equalTo: stepper.leadingAnchor, constant: -15),
+            vStack.trailingAnchor.constraint(lessThanOrEqualTo: stepper.leadingAnchor, constant: -33),
             vStack.topAnchor.constraint(equalTo: topAnchor, constant: 4)
         ])
 

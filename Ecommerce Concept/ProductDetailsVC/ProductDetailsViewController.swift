@@ -45,11 +45,11 @@ class ProductDetailsViewController: UIViewController {
         titleLabel.text = "Product Details"
         
         navigationItem.titleView = titleLabel
-        navigationItem.leftBarButtonItem = generateBarButtonItem(withColor: .blackTextColor, andImage: "back")
+        navigationItem.leftBarButtonItem = generateBarButtonItem(withColor: .blackTextColor, andImage: "back", action: #selector(goBack))
         navigationItem.rightBarButtonItem = generateBarButtonItem(withColor: .orangeColor, andImage: "cart")
     }
     
-    private func generateBarButtonItem(withColor color: UIColor, andImage image: String) -> UIBarButtonItem {
+    private func generateBarButtonItem(withColor color: UIColor, andImage image: String, action: Selector? = nil) -> UIBarButtonItem {
         
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: image), for: .normal)
@@ -58,7 +58,9 @@ class ProductDetailsViewController: UIViewController {
         button.tintColor = .white
         button.clipsToBounds = true
         button.layer.cornerRadius = 10
-       
+        if let action = action {
+            button.addTarget(self, action: action, for: .touchUpInside)
+        }
         let barButtomItem = UIBarButtonItem(customView: button)
         return barButtomItem
     }
@@ -95,27 +97,24 @@ class ProductDetailsViewController: UIViewController {
         dataSource?.apply(snapShot, animatingDifferences: true)
     }
     
-    
-    
-    
     // MARK: - setup Bottom View
     func setupButtomView() {
         let productDetailBottomViewModel = ProductDetailBottomViewModel(productDetailModel: model)
         productDetailsBottomView = ProductDetailsBottomView(productDetailBottomViewModel: productDetailBottomViewModel)
-        
         productDetailsBottomView.backgroundColor = .white
+        let tabBarHeight = tabBarController?.tabBar.frame.height ?? 0
+        view.addSubviewAtTheBottom(subview: productDetailsBottomView, bottomOffset: tabBarHeight)
         
-        
-        productDetailsBottomView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(productDetailsBottomView)
-        
-        NSLayoutConstraint.activate([
-            productDetailsBottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            productDetailsBottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            productDetailsBottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-           // productDetailsBottomView.heightAnchor.constraint(equalToConstant: 400)
-
-        ])
+//        productDetailsBottomView.translatesAutoresizingMaskIntoConstraints = false
+//        view.addSubview(productDetailsBottomView)
+//
+//        NSLayoutConstraint.activate([
+//            productDetailsBottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+//            productDetailsBottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//            productDetailsBottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+//           // productDetailsBottomView.heightAnchor.constraint(equalToConstant: 400)
+//
+//        ])
     }
 }
 

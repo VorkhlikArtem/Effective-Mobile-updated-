@@ -28,7 +28,6 @@ class CapacitySegmentedControl: UIStackView {
         super.init(frame: .zero)
         
         self.axis = .horizontal
-        distribution = .fillEqually
         spacing = 5
         setupStackView(with: productCapacityViewModel.formatedCapacities)
         setupSegmentConstraints()
