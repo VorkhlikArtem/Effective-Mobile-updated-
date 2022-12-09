@@ -9,18 +9,6 @@ import UIKit
 
 struct Constants {
     
-    struct CategorySection {
-        let title: String
-        let imageName: String
-    }
-    
-    static let categorySectionModel: [CategorySection] = [
-        CategorySection(title: "Phones", imageName: "phones"),
-        CategorySection(title: "Computer", imageName: "computer"),
-        CategorySection(title: "Health", imageName: "heart"),
-        CategorySection(title: "Books", imageName: "books")
-    ]
-    
     static let detailProductMenuButtonsNames = ["Shop", "Details", "Features"]
     static let detailProductFeaturesImageNames = ["CPU", "camera", "ssd", "sd"]
     

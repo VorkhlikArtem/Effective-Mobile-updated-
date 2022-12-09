@@ -21,7 +21,7 @@ class MainViewController: UIViewController {
             case bestSellersSection = "Best Seller"
         }
         enum Item : Hashable {
-            case selectCategoryItem(category: Constants.CategorySection  )
+            case selectCategoryItem(category: CategoryItem  )
             case hotSalesItem(hotSalesItem: HotSalesItem)
             case bestSellerItem(bestSellersItem: BestSellersItem)
             
@@ -56,7 +56,7 @@ class MainViewController: UIViewController {
     let networkManager = NetworkManager()
     
     struct Model{
-        var selectCategoryImageNames = [Constants.CategorySection]()
+        var selectCategoryImageNames = [CategoryItem]()
         var hotSalesItem = [HotSalesItem]()
         var bestSellerItem = [BestSellersItem]()
     }
@@ -73,7 +73,7 @@ class MainViewController: UIViewController {
         collectionView.allowsSelection = true
         collectionView.allowsSelectionDuringEditing = true
         
-        model.selectCategoryImageNames = Constants.categorySectionModel
+        model.selectCategoryImageNames = CategoryItem.categorySectionModel
         
         let mainResponse = Bundle.main.decode(MainResponse.self, from: "mainData.json")
         self.model.hotSalesItem = mainResponse.homeStore
@@ -114,17 +114,15 @@ class MainViewController: UIViewController {
         
     }
     
-    @objc func filterTapped() {
-        print("filter")
-        filterView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(filterView)
-        
-        NSLayoutConstraint.activate([
-            filterView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
-            filterView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
-            filterView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
-        ])
-    }
+    let visualEffectView: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .dark)
+        let visualEffectView = UIVisualEffectView(effect: blurEffect)
+        visualEffectView.isUserInteractionEnabled = false
+        return visualEffectView
+    }()
+    
+
+    
     
     // MARK: - reloadData
     private func reloadData() {
@@ -160,7 +158,7 @@ extension MainViewController {
                 
             case .hotSalesItem(let hotSalesItem) :
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HotSalesCell.reuseId, for: indexPath) as! HotSalesCell
-                cell.configure(with: hotSalesItem.picture)
+                cell.configure(with: hotSalesItem)
                 return cell
                 
             case .bestSellerItem(let bestSellersItem):
@@ -317,6 +315,50 @@ extension MainViewController: BestSellerCellDelegate {
         reloadData()
     }
 }
+
+// MARK: - Filter View Presenting and Dismissing
+extension MainViewController: FilterViewDelegate {
+    @objc func filterTapped() {
+        filterView.delegate = self
+        view.addSubviewWithWholeFilling(subview: visualEffectView)
+        animateAlertIn()
+        
+        filterView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(filterView)
+        NSLayoutConstraint.activate([
+            filterView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            filterView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            filterView.topAnchor.constraint(equalTo: view.topAnchor, constant: 70),
+        ])
+    }
+    
+    func animateAlertIn() {
+        filterView.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+        filterView.alpha = 0
+        visualEffectView.alpha = 0
+        UIView.animate(withDuration: 0.4) {
+            self.visualEffectView.alpha = 0.8
+            self.filterView.alpha = 1
+            self.filterView.transform = .identity
+        }
+    }
+    
+    func animateAlertOut() {
+        UIView.animate(withDuration: 0.4) {
+            self.visualEffectView.alpha = 0
+            self.filterView.alpha = 0
+            self.filterView.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+        } completion: { _ in
+            self.filterView.removeFromSuperview()
+        }
+    }
+    
+    func removeViewFromSuperview(_ filterView: UIView) {
+        animateAlertOut()
+    }
+}
+
+
 
 
 

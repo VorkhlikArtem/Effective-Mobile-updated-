@@ -43,7 +43,7 @@ class SelectCategoryCell: UICollectionViewCell {
     
 
     
-    func configure(with categoryModel: Constants.CategorySection) {
+    func configure(with categoryModel: CategoryItem) {
         categoryImageView.image = UIImage(named: categoryModel.imageName)?.withTintColor(.gray)
         categoryTitle.text = categoryModel.title
         

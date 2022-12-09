@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol FilterViewDelegate: AnyObject {
+    func removeViewFromSuperview(_ filterView: UIView)
+}
+
 class FilterView: UIView {
     
     let filterOptions = FilterOption.allCases
@@ -49,6 +53,8 @@ class FilterView: UIView {
         return button
     }()
     
+    weak var delegate: FilterViewDelegate?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .yellow
@@ -69,7 +75,7 @@ class FilterView: UIView {
     }
     
     @objc func dismissFilterView() {
-        self.removeFromSuperview()
+        delegate?.removeViewFromSuperview(self)
     }
     
     func fillupStackView() {

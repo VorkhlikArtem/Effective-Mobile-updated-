@@ -22,7 +22,7 @@ class MainTabBarController: UITabBarController {
   
         
         viewControllers = [mainNC, cartNC]
-        tabBar.items?[1].badgeValue = "sds"
+        //tabBar.items?[1].badgeValue = "sds"
         
        
     }

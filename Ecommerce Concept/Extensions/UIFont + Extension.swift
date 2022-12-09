@@ -42,8 +42,20 @@ extension UIFont {
         return UIFont(name: "MarkPro-Bold", size: 15)
     }
     
+    static func markProBold10() -> UIFont? {
+        return UIFont(name: "MarkPro-Bold", size: 10)
+    }
+    
+    static func markProBold11() -> UIFont? {
+        return UIFont(name: "MarkPro-Bold", size: 11)
+    }
+    
     static func markProRegular20() -> UIFont? {
         return UIFont(name: "MarkPro-Regular", size: 20)
+    }
+    
+    static func markProRegular11() -> UIFont? {
+        return UIFont(name: "MarkPro-Regular", size: 11)
     }
     
     

@@ -54,7 +54,7 @@ class FilterTextFieldFormStackView : UIStackView {
         postNotification()
         filteringTable.translatesAutoresizingMaskIntoConstraints = false
         guard let viewOfViewController = self.superview?.superview?.superview else {return}
-        print(viewOfViewController)
+       // print(viewOfViewController)
         viewOfViewController.addSubview(filteringTable)
         NSLayoutConstraint.activate([
             filteringTable.topAnchor.constraint(equalTo: filterTextField.bottomAnchor, constant: 0),

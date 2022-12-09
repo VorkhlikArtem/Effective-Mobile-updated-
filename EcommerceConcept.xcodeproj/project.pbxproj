@@ -29,6 +29,7 @@
 		AC484284294362BC00090D5E /* UIView + Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC484283294362BB00090D5E /* UIView + Constraints.swift */; };
 		AC4842862943646F00090D5E /* UIButton + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4842852943646F00090D5E /* UIButton + Extension.swift */; };
 		AC48428829437ADE00090D5E /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC48428729437ADE00090D5E /* MainTabBarController.swift */; };
+		AC48428B2943EFE700090D5E /* CategorySectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC48428A2943EFE700090D5E /* CategorySectionModel.swift */; };
 		AC58784D293B743A00271423 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC58784C293B743A00271423 /* AppDelegate.swift */; };
 		AC58784F293B743A00271423 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC58784E293B743A00271423 /* SceneDelegate.swift */; };
 		AC587851293B743A00271423 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC587850293B743A00271423 /* MainViewController.swift */; };
@@ -90,6 +91,7 @@
 		AC484283294362BB00090D5E /* UIView + Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Constraints.swift"; sourceTree = "<group>"; };
 		AC4842852943646F00090D5E /* UIButton + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton + Extension.swift"; sourceTree = "<group>"; };
 		AC48428729437ADE00090D5E /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		AC48428A2943EFE700090D5E /* CategorySectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySectionModel.swift; sourceTree = "<group>"; };
 		AC587849293B743A00271423 /* EcommerceConcept.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EcommerceConcept.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC58784C293B743A00271423 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AC58784E293B743A00271423 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -201,6 +203,18 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		AC4842892943EE7B00090D5E /* MainVC */ = {
+			isa = PBXGroup;
+			children = (
+				AC587850293B743A00271423 /* MainViewController.swift */,
+				AC04F3F7293D1240008CFD18 /* FilterView */,
+				AC587866293B89BC00271423 /* Cells */,
+				AC04F3F2293CD339008CFD18 /* Headers */,
+				AC587868293B8A7900271423 /* Models */,
+			);
+			path = MainVC;
+			sourceTree = "<group>";
+		};
 		AC587840293B743A00271423 = {
 			isa = PBXGroup;
 			children = (
@@ -223,19 +237,15 @@
 				AC58784C293B743A00271423 /* AppDelegate.swift */,
 				AC58784E293B743A00271423 /* SceneDelegate.swift */,
 				AC48428729437ADE00090D5E /* MainTabBarController.swift */,
-				AC587850293B743A00271423 /* MainViewController.swift */,
-				ACA3A530293D395300F2EF19 /* SimpleViewController.swift */,
+				AC4842892943EE7B00090D5E /* MainVC */,
 				AC413D612942283F0070DB57 /* CartTableVC */,
 				AC7B9867293E69300084832A /* ProductDetailsVC */,
-				AC04F3F7293D1240008CFD18 /* FilterView */,
-				AC587866293B89BC00271423 /* Cells */,
-				AC04F3F2293CD339008CFD18 /* Headers */,
 				AC04F3E4293BBCD6008CFD18 /* Constants */,
 				AC587870293B989200271423 /* Json */,
 				AC587867293B8A6900271423 /* Services */,
-				AC587868293B8A7900271423 /* Models */,
 				AC587869293B8A8400271423 /* Extensions */,
 				AC587855293B744500271423 /* Assets.xcassets */,
+				ACA3A530293D395300F2EF19 /* SimpleViewController.swift */,
 				AC04F3ED293CAC4D008CFD18 /* Fonts */,
 				AC587857293B744500271423 /* LaunchScreen.storyboard */,
 				AC58785A293B744500271423 /* Info.plist */,
@@ -266,6 +276,7 @@
 			isa = PBXGroup;
 			children = (
 				AC587860293B7E7000271423 /* Models.swift */,
+				AC48428A2943EFE700090D5E /* CategorySectionModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -429,6 +440,7 @@
 				AC04F3E3293BB5CC008CFD18 /* UIFont + Extension.swift in Sources */,
 				AC58786D293B8D6F00271423 /* HotSalesCell.swift in Sources */,
 				AC7B9866293E4A310084832A /* NSNotification.Name + Extension.swift in Sources */,
+				AC48428B2943EFE700090D5E /* CategorySectionModel.swift in Sources */,
 				AC58786F293B8DE600271423 /* BestSellersCell.swift in Sources */,
 				AC48428829437ADE00090D5E /* MainTabBarController.swift in Sources */,
 				AC5B32852940D5E6003DF38F /* ProductCapacityViewModel.swift in Sources */,

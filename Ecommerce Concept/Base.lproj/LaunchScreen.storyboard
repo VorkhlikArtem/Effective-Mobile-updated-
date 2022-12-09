@@ -83,6 +83,15 @@
                                     <constraint firstItem="lyN-QX-wUp" firstAttribute="leading" secondItem="aiZ-Nb-y7I" secondAttribute="leading" id="J3w-27-mdo"/>
                                 </constraints>
                             </stackView>
+                            <visualEffectView opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u9e-Zz-Wfy">
+                                <rect key="frame" x="62" y="106" width="289" height="360"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="KhV-L8-XbC">
+                                    <rect key="frame" x="0.0" y="0.0" width="289" height="360"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <blurEffect style="dark"/>
+                            </visualEffectView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>

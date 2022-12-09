@@ -14,4 +14,10 @@ extension UILabel {
         self.font = font
         self.textColor = textColor
     }
+    
+    convenience init(text: String? = nil, font: UIFont?, textColor: UIColor, labelColor: UIColor) {
+        self.init(text: text, font: font, textColor: textColor)
+        backgroundColor = labelColor
+        
+    }
 }

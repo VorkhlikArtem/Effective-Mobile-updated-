@@ -17,12 +17,13 @@ class CartBottomView: UIView {
     
     private let checkoutButton = UIButton(text: "Checkout", font: .markProBold20(), textColor: .white, buttonColor: .orangeColor)
     
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .blackTextColor
         checkoutButton.clipsToBounds = true
         checkoutButton.layer.cornerRadius = 10
-        setupStacks()
+        setupConstraints()
     }
     
     func configure(with bottomCartViewModel: CartBottomViewModelProtocol) {
@@ -34,7 +35,30 @@ class CartBottomView: UIView {
         totalPriceLabel.text = text
     }
     
-    private func  setupStacks() {
+    private func  setupConstraints() {
+        
+        checkoutButton.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(checkoutButton)
+        NSLayoutConstraint.activate([
+          //  checkoutButton.topAnchor.constraint(equalTo: mainStack.bottomAnchor, constant: 27),
+            checkoutButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 44),
+            checkoutButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20),
+            checkoutButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -44),
+
+        ])
+        
+        let bottomLine = UIView()
+        bottomLine.backgroundColor = #colorLiteral(red: 0.2123073339, green: 0.2123567462, blue: 0.3040331602, alpha: 1)
+        bottomLine.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(bottomLine)
+        NSLayoutConstraint.activate([
+            bottomLine.bottomAnchor.constraint(equalTo: checkoutButton.topAnchor, constant: -27),
+            bottomLine.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4),
+            bottomLine.heightAnchor.constraint(equalToConstant: 1),
+            bottomLine.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -4),
+
+        ])
+        
         let totalStack = UIStackView(arrangedSubviews: [totalLabel, totalPriceLabel])
         totalStack.axis = .horizontal
         totalStack.distribution = .equalSpacing
@@ -51,20 +75,23 @@ class CartBottomView: UIView {
         NSLayoutConstraint.activate([
             mainStack.topAnchor.constraint(equalTo: topAnchor, constant: 15),
             mainStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 55),
-           // mainStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -26),
+            mainStack.bottomAnchor.constraint(equalTo: bottomLine.topAnchor, constant: -26),
             mainStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -35),
             deliveryInfoLabel.leadingAnchor.constraint(equalTo: totalPriceLabel.leadingAnchor)
         ])
-        
-        checkoutButton.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(checkoutButton)
+
+        let topLine = UIView()
+        topLine.backgroundColor = #colorLiteral(red: 0.2123073339, green: 0.2123567462, blue: 0.3040331602, alpha: 1)
+        topLine.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(topLine)
         NSLayoutConstraint.activate([
-            checkoutButton.topAnchor.constraint(equalTo: mainStack.bottomAnchor, constant: 27),
-            checkoutButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 44),
-            checkoutButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20),
-            checkoutButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -44),
+            topLine.topAnchor.constraint(equalTo: topAnchor),
+            topLine.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4),
+            topLine.heightAnchor.constraint(equalToConstant: 3),
+            topLine.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -4),
 
         ])
+  
     }
     
     required init?(coder: NSCoder) {
