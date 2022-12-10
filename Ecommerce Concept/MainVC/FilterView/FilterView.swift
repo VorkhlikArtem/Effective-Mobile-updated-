@@ -57,11 +57,12 @@ class FilterView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .yellow
+        backgroundColor = .white
         fillupStackView()
         setupConstraints()
         addGesture()
         dismissButton.addTarget(self, action: #selector(dismissFilterView), for: .touchUpInside)
+        doneButton.addTarget(self, action: #selector(dismissFilterView), for: .touchUpInside)
     }
     
     override func layoutSubviews() {
@@ -75,6 +76,7 @@ class FilterView: UIView {
     }
     
     @objc func dismissFilterView() {
+        postNotification()
         delegate?.removeViewFromSuperview(self)
     }
     

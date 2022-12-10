@@ -8,7 +8,7 @@
 import Foundation
 
 struct CartCellViewModel {
-  //  let count: Int
+
     let images: String
     let price: Int
     let title: String
@@ -19,6 +19,6 @@ extension CartCellViewModel {
         images = cartItemModel.images
         price = cartItemModel.price
         title = cartItemModel.title
-     //   count = 1
+ 
     }
 }

@@ -1,11 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "Vector (12).png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "gamecontroller@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

@@ -22,8 +22,6 @@ class ProductDetailsBottomView: UIView {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: "unselected"), for: .normal)
-       // button.tintColor = .blackTextColor
-       // button.backgroundColor = .white
         button.addTarget(self, action: #selector(likeTapped), for: .touchUpInside)
         return button
     }()

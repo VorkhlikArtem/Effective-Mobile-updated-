@@ -84,19 +84,13 @@ class BestSellerCell: UICollectionViewCell {
         likeButton.layer.cornerRadius = likeButton.frame.height / 2
         
         likeButton.layer.shadowColor = UIColor.black.cgColor
-        likeButton.layer.shadowRadius = 2
-        likeButton.layer.shadowOpacity = 1
-        likeButton.layer.shadowOffset = .init(width: 2, height: 2)
+        likeButton.layer.shadowRadius = 3
+        likeButton.layer.shadowOpacity = 0.7
+        likeButton.layer.shadowOffset = .init(width: 5, height: 5)
     }
     
     @objc func likeButtonTapped() {
         isFavorite.toggle()
-//        if isFavorite {
-//            likeButton.setImage(UIImage(named: "selected"), for: .normal)
-//        } else {
-//            likeButton.setImage(UIImage(named: "unselected"), for: .normal)
-//        }
-        
     }
     
     func configure(with bestSellerModel: BestSellersItem) {
@@ -109,9 +103,7 @@ class BestSellerCell: UICollectionViewCell {
     }
     
     func setupConstraints() {
-        
-      
-        
+
         modelName.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(modelName)
         NSLayoutConstraint.activate([

@@ -10,35 +10,31 @@ import UIKit
 class ProductDetailsViewController: UIViewController {
     
     var collectionView: UICollectionView!
-    var dataSource: UICollectionViewDiffableDataSource<Section, Item>?
+    var dataSource: UICollectionViewDiffableDataSource<DetailCVViewModel.Section, DetailCVViewModel.Item>?
     
     var productDetailsBottomView: ProductDetailsBottomView!
-    
-    let networkManager = NetworkManager()
-    
+    let networkManager = DataFetcher()
     var model: ProductDetailModel!
-    
-    let strings = ["https://avatars.mds.yandex.net/get-mpic/5235334/img_id5575010630545284324.png/orig", "https://www.manualspdf.ru/thumbs/products/l/1260237-samsung-galaxy-note-20-ultra.jpg", "https://shop.gadgetufa.ru/images/upload/52534-smartfon-samsung-galaxy-s20-ultra-12-128-chernyj_1024.jpg", "https://mi92.ru/wp-content/uploads/2020/03/smartfon-xiaomi-mi-10-pro-12-256gb-global-version-starry-blue-sinij-1.jpg"
-    ]
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .backgroundColor
         setupNavigationBar()
         setupCollectionView()
         createDataSource()
-        networkManager.fetchData(url: NetworkManager.detailUrlString, type: ProductDetailModel.self) { [weak self] productDetailModel in
-            guard let self = self else {return}
+        networkManager.getDetail { [weak self] productDetailModel in
+            guard let self = self,
+                  let productDetailModel = productDetailModel else {return}
             self.model = productDetailModel
             DispatchQueue.main.async {
                 self.setupButtomView()
                 self.reloadData()
             }
         }
-        
        // reloadData()
     }
     
+    // MARK: - setup Navigation Bar
     private func setupNavigationBar() {
         let titleLabel = UILabel()
         titleLabel.font = UIFont(name: "MarkPro-Medium", size: 18)
@@ -65,9 +61,7 @@ class ProductDetailsViewController: UIViewController {
         return barButtomItem
     }
     
-    @objc func goBack() {
-        navigationController?.popViewController(animated: true)
-    }
+
     
     // MARK: - setup Collection View
     private func setupCollectionView() {
@@ -88,10 +82,9 @@ class ProductDetailsViewController: UIViewController {
     }
     
     private func reloadData() {
-        var snapShot = NSDiffableDataSourceSnapshot<Section, Item>()
+        var snapShot = NSDiffableDataSourceSnapshot<DetailCVViewModel.Section, DetailCVViewModel.Item>()
         snapShot.appendSections([.images])
-        //let items = model.images.map { Item.init(imageUrlString: $0)}
-        let items = strings.map { Item.init(imageUrlString: $0)}
+        let items = model.images.map { DetailCVViewModel.Item.init(imageUrlString: $0)}
         snapShot.appendItems(items, toSection: .images)
    
         dataSource?.apply(snapShot, animatingDifferences: true)
@@ -105,16 +98,6 @@ class ProductDetailsViewController: UIViewController {
         let tabBarHeight = tabBarController?.tabBar.frame.height ?? 0
         view.addSubviewAtTheBottom(subview: productDetailsBottomView, bottomOffset: tabBarHeight)
         
-//        productDetailsBottomView.translatesAutoresizingMaskIntoConstraints = false
-//        view.addSubview(productDetailsBottomView)
-//
-//        NSLayoutConstraint.activate([
-//            productDetailsBottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-//            productDetailsBottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//            productDetailsBottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//           // productDetailsBottomView.heightAnchor.constraint(equalToConstant: 400)
-//
-//        ])
     }
 }
 
@@ -166,23 +149,10 @@ extension ProductDetailsViewController {
     }
 }
 
+// MARK: - Routing
+extension ProductDetailsViewController {
+    @objc func goBack() {
+        navigationController?.popViewController(animated: true)
+    }
+}
 
-//
-////MARK: - SwiftUI
-//import SwiftUI
-//struct ProductDetailsViewControllerProvider: PreviewProvider {
-//    static var previews: some View {
-//        ContainerView().ignoresSafeArea(.all)
-//    }
-//    struct ContainerView: UIViewControllerRepresentable {
-//
-//        let viewController = UINavigationController(rootViewController: ProductDetailsViewController())
-//
-//        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-//        }
-//
-//        func makeUIViewController(context: Context) -> some UIViewController {
-//            return viewController
-//        }
-//    }
-//}

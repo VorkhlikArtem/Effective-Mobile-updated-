@@ -26,11 +26,6 @@ class CartTableViewController: UIViewController {
         tableView.register(CartTVCell.self, forCellReuseIdentifier: CartTVCell.reuseId)
         tableView.backgroundColor = .blackTextColor
         
-//        self.bottomCartView.configure(with: viewModel.bottomCartViewModel)
-//        self.navigationController?.tabBarItem.badgeValue = viewModel.totalCountString
-//        self.tabBarController?.tabBar.items?[1].badgeValue = viewModel.totalCountString
-//        self.navigationController?.tabBarController?.tabBar.items?[1].badgeValue = viewModel.totalCountString
-        
         viewModel.fetchDataCallback = {[unowned self] viewModel in
             DispatchQueue.main.async {
                 self.tableView.reloadData()
@@ -76,7 +71,7 @@ extension CartTableViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: false)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 

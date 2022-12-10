@@ -12,6 +12,13 @@ class MainViewController: UIViewController {
     
     var collectionView: UICollectionView!
     lazy var filterView = FilterView()
+    lazy var visualEffectView: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .dark)
+        let visualEffectView = UIVisualEffectView(effect: blurEffect)
+        visualEffectView.isUserInteractionEnabled = false
+        return visualEffectView
+    }()
+    
     typealias DataSourceType = UICollectionViewDiffableDataSource<ViewModel.Section, ViewModel.Item>
 
     enum ViewModel {
@@ -53,7 +60,7 @@ class MainViewController: UIViewController {
     
     var dataSource: DataSourceType!
     var model = Model()
-    let networkManager = NetworkManager()
+    let networkManager = DataFetcher()
     
     struct Model{
         var selectCategoryImageNames = [CategoryItem]()
@@ -75,21 +82,22 @@ class MainViewController: UIViewController {
         
         model.selectCategoryImageNames = CategoryItem.categorySectionModel
         
-        let mainResponse = Bundle.main.decode(MainResponse.self, from: "mainData.json")
-        self.model.hotSalesItem = mainResponse.homeStore
-        self.model.bestSellerItem = mainResponse.bestSeller
+//        let mainResponse = Bundle.main.decode(MainResponse.self, from: "mainData.json")
+//        self.model.hotSalesItem = mainResponse.homeStore
+//        self.model.bestSellerItem = mainResponse.bestSeller
 
         self.reloadData()
         
-        
-//        networkManager.fetchData(url: NetworkManager.mainUrlSting) { [weak self] mainResponse in
-//            guard let self = self else {return}
-//            self.model.hotSalesItem = mainResponse.homeStore
-//            self.model.bestSellerItem = mainResponse.bestSeller
-//            DispatchQueue.main.async {
-//                self.reloadData()
-//            }
-//        }
+        networkManager.getMain { [weak self] mainResponse in
+            guard let self = self else {return}
+            guard let mainResponse = mainResponse else {return}
+            self.model.hotSalesItem = mainResponse.homeStore
+            self.model.bestSellerItem = mainResponse.bestSeller
+            DispatchQueue.main.async {
+                self.reloadData()
+            }
+        }
+       
         
     }
     
@@ -114,16 +122,7 @@ class MainViewController: UIViewController {
         
     }
     
-    let visualEffectView: UIVisualEffectView = {
-        let blurEffect = UIBlurEffect(style: .dark)
-        let visualEffectView = UIVisualEffectView(effect: blurEffect)
-        visualEffectView.isUserInteractionEnabled = false
-        return visualEffectView
-    }()
-    
-
-    
-    
+  
     // MARK: - reloadData
     private func reloadData() {
         var snapShot = NSDiffableDataSourceSnapshot<ViewModel.Section, ViewModel.Item>()
@@ -285,14 +284,14 @@ extension MainViewController: UICollectionViewDelegate {
                 cell.deselect()
             }
             selectedCategory = indexPath.row
-            
+
             guard let cell = collectionView.cellForItem(at: indexPath) as? SelectCategoryCell else {return}
             cell.select()
         case .hotSalesSection:
-            print("hotSalesSection")
+            print("hotSalesSection tapped")
         case .bestSellersSection:
             showNextVC()
-            print("bestSellersSection")
+            print("bestSellersSection tapped")
         }
     }
     
@@ -321,15 +320,16 @@ extension MainViewController: FilterViewDelegate {
     @objc func filterTapped() {
         filterView.delegate = self
         view.addSubviewWithWholeFilling(subview: visualEffectView)
-        animateAlertIn()
-        
         filterView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(filterView)
         NSLayoutConstraint.activate([
             filterView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
             filterView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
-            filterView.topAnchor.constraint(equalTo: view.topAnchor, constant: 70),
+            filterView.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
         ])
+        
+        NotificationCenter.default.post(name: .hideFilterTables, object: nil)
+        animateAlertIn()
     }
     
     func animateAlertIn() {

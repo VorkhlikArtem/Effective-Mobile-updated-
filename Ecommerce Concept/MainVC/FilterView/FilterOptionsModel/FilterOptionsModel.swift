@@ -15,6 +15,7 @@ enum FilterOption: CaseIterable {
     
     static var allCases: [FilterOption] = [.brand(brandNames: ["IPhone", "Samsung", "Xiaomi", "Motorola"]),
                                             .price([
+                                                (minPrice: 0, maxPrice: 100),
                                                 (minPrice: 100, maxPrice: 200),
                                                 (minPrice: 200, maxPrice: 300),
                                                 (minPrice: 300, maxPrice: 400),

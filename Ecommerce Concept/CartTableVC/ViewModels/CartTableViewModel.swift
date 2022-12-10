@@ -22,7 +22,13 @@ protocol CartTableViewModelProtocol {
 }
 
 
-class CartTableViewModel: CartTableViewModelProtocol  {
+final class CartTableViewModel: CartTableViewModelProtocol  {
+    
+    
+    var fetchDataCallback: ((CartTableViewModelProtocol) -> Void)?
+    var countChangeCallback: ((String, String?) -> Void)?
+    
+    let networkManager = DataFetcher()
 
 
     var countableCartItems = [CountableCartItem]() {
@@ -56,42 +62,16 @@ class CartTableViewModel: CartTableViewModelProtocol  {
         return totalCount != 0 ? "\(totalCount)" : nil
     }
     
-    
-    var fetchDataCallback: ((CartTableViewModelProtocol) -> Void)?
-    var countChangeCallback: ((String, String?) -> Void)?
-    
-    let networkManager = NetworkManager()
-    
-//    init() {
-//        networkManager.fetchData(url: NetworkManager.cartUrlString, type: CartModel.self, completion: { cartModel in
-//          // print(cartModel)
-//            self.bottomCartViewModel = CartBottomViewModel.init(from: cartModel)
-//
-//            let countableModel = CountableCartModel.init(from: cartModel)
-//            self.countableCartItems = countableModel.basket
-//
-//            //self.cartItems = countableModel.basket.map { CartCellViewModel.init(from: $0.cartItem)}
-//
-//            DispatchQueue.main.async {
-//                self.fetchDataCallback?(self)
-//
-////                let totalPriceString = "$\(self.totalPrice.formattedWithSeparator) us"
-////                let totalCountString = self.totalCount != 0 ? "\(self.totalCount)" : nil
-////                self.countChangeCallback?(totalPriceString, totalCountString)
-//            }
-//
-//        })
-//    }
-    
     func getData() {
-        networkManager.fetchData(url: NetworkManager.cartUrlString, type: CartModel.self, completion: { cartModel in
+        networkManager.getCart { [weak self] cartModel in
+            guard let cartModel = cartModel, let self = self else {return}
             self.bottomCartViewModel = CartBottomViewModel.init(from: cartModel)
             let countableModel = CountableCartModel.init(from: cartModel)
             self.countableCartItems = countableModel.basket
             DispatchQueue.main.async {
                 self.fetchDataCallback?(self)
             }
-        })
+        }
     }
     
     func countChanged(indexOfItem: Int, count: Int) {
