@@ -138,24 +138,3 @@ class FilterView: UIView {
     
 }
 
-
-
-
-//MARK: - SwiftUI
-import SwiftUI
-struct FilterViewProvider: PreviewProvider {
-    static var previews: some View {
-        ContainerView().ignoresSafeArea(.all).previewInterfaceOrientation(.portrait)
-    }
-    struct ContainerView: UIViewControllerRepresentable {
-        
-        let viewController = UINavigationController(rootViewController: SimpleViewController())
-        
-        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-        }
-
-        func makeUIViewController(context: Context) -> some UIViewController {
-            return viewController
-        }
-    }
-}
