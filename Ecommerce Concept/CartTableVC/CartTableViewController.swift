@@ -26,6 +26,20 @@ class CartTableViewController: UIViewController {
         tableView.register(CartTVCell.self, forCellReuseIdentifier: CartTVCell.reuseId)
         tableView.backgroundColor = .blackTextColor
         
+        setupCallBacks()
+
+        viewModel.getData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if viewModel.cartItems.isEmpty {
+            viewModel.getData()
+        }
+    }
+    
+    // MARK: - Setup CallBacks
+    private func setupCallBacks() {
         viewModel.fetchDataCallback = {[unowned self] viewModel in
             DispatchQueue.main.async {
                 self.tableView.reloadData()
@@ -34,16 +48,13 @@ class CartTableViewController: UIViewController {
                 self.tabBarController?.tabBar.items?[1].badgeValue = viewModel.totalCountString
             }
         }
-        viewModel.getData()
         
-
         viewModel.countChangeCallback = {[unowned self] totalPriceString, totalCountString in
             DispatchQueue.main.async {
                 self.bottomCartView.configureTotalPrice(with: totalPriceString)
                 self.navigationController?.tabBarItem.badgeValue = totalCountString
             }
         }
-     
     }
     
     private func setConstraints() {
@@ -75,6 +86,8 @@ extension CartTableViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
+// MARK: - CartTVCellDelegate
+
 extension CartTableViewController: CartTVCellDelegate {
     
     func countChanged(_ cell: UITableViewCell, count: Int) {
@@ -86,26 +99,6 @@ extension CartTableViewController: CartTVCellDelegate {
         guard let indexPath = tableView.indexPath(for: cell) else {return}
         viewModel.deleteItem(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .automatic)
-    }
-}
-
-
-//MARK: - SwiftUI
-import SwiftUI
-struct CartTableViewControllerProvider: PreviewProvider {
-    static var previews: some View {
-        ContainerView().ignoresSafeArea(.all)
-    }
-    struct ContainerView: UIViewControllerRepresentable {
-        
-        let viewController = CartTableViewController()
-        
-        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-        }
-
-        func makeUIViewController(context: Context) -> some UIViewController {
-            return viewController
-        }
     }
 }
 

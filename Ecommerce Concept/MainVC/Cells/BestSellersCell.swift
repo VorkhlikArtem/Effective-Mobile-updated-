@@ -67,7 +67,7 @@ class BestSellerCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
-        layer.cornerRadius = 4
+        layer.cornerRadius = 10
         clipsToBounds = true
         bestSellersImageView.contentMode = .scaleAspectFit
         likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)

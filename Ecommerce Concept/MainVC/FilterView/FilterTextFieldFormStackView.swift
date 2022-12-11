@@ -85,19 +85,25 @@ class FilterTextFieldFormStackView : UIStackView {
 
     }
     
+    // MARK: - Action For TextField Tap Gesture
     @objc func revealFilteringTable() {
         postNotification()
         filteringTable.translatesAutoresizingMaskIntoConstraints = false
-//        guard let viewOfViewController = self.superview?.superview?.superview else {return}
         guard let window = UIApplication.keyWindow else {return}
         window.addSubview(filteringTable)
+        
+        let tableViewHeight: CGFloat = CGFloat(filterOptionItems.count > 5 ? 200 : 44*filterOptionItems.count)
+        
         NSLayoutConstraint.activate([
             filteringTable.topAnchor.constraint(equalTo: filterTextField.bottomAnchor, constant: 0),
             filteringTable.leadingAnchor.constraint(equalTo: filterTextField.leadingAnchor, constant: 0),
             filteringTable.trailingAnchor.constraint(equalTo: filterTextField.trailingAnchor, constant: 0),
-            filteringTable.heightAnchor.constraint(equalToConstant: 150)
+            filteringTable.heightAnchor.constraint(equalToConstant: tableViewHeight)
         ])
         filteringTable.reloadData()
+        print(filteringTable.rowHeight)
+        print(filteringTable.fillerRowHeight)
+        print(filteringTable.estimatedRowHeight)
     }
     
     // MARK: - adding Observers
@@ -145,6 +151,8 @@ extension FilterTextFieldFormStackView: UITableViewDataSource, UITableViewDelega
         filterTextField.text = filterOptionItems[indexPath.row]
         filteringTable.removeFromSuperview()
     }
+    
+
 }
 
 extension FilterTextFieldFormStackView: UITextFieldDelegate {

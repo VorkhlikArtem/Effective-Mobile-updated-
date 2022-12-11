@@ -11,35 +11,41 @@ final class DataFetcher {
     
     func getMain(completion: @escaping (MainResponse?)->()) {
         fetchData(url: Url.mainUrlSting, type: MainResponse.self) { mainResponse in
-            completion(mainResponse)
+            DispatchQueue.main.async {
+                completion(mainResponse)
+            }
         }
     }
     
     func getDetail(completion: @escaping (ProductDetailModel?)->()) {
         fetchData(url: Url.detailUrlString, type: ProductDetailModel.self) { productDetailModel in
-            completion(productDetailModel)
+            DispatchQueue.main.async {
+                completion(productDetailModel)
+            }
         }
     }
     
     func getCart(completion: @escaping (CartModel?)->()) {
         fetchData(url: Url.cartUrlString, type: CartModel.self) { cartModel in
-            completion(cartModel)
+            DispatchQueue.main.async {
+                completion(cartModel)
+            }
         }
     }
 
     
-    func fetchData<T: Decodable>(url: String, type: T.Type, completion: @escaping (T?)->()) {
+    private func fetchData<T: Decodable>(url: String, type: T.Type, completion: @escaping (T?)->()) {
 
         guard let url = URL(string: url) else { return }
         
         URLSession.shared.dataTask(with: url) { (data, _, error) in
             if let error = error {
-                completion(nil)
                 print("Error: ", error.localizedDescription)
+                completion(nil)
             }
             guard let data = data else {
+                print("No data from the server")
                 completion(nil)
-                print("No data")
                 return }
             
             do {

@@ -53,5 +53,6 @@ extension ProductDetailBottomViewModel {
 extension ProductDetailBottomViewModelProtocol {
     var formatedPrice: String {
         return "$" + String(format: "%.02f", Float(price))
+     
     }
 }

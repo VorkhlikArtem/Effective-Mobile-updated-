@@ -20,21 +20,20 @@ class ProductDetailsViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .backgroundColor
         setupNavigationBar()
-        setupCollectionView()
-        createDataSource()
         networkManager.getDetail { [weak self] productDetailModel in
             guard let self = self,
                   let productDetailModel = productDetailModel else {return}
             self.model = productDetailModel
             DispatchQueue.main.async {
                 self.setupButtomView()
+                self.setupCollectionView()
+                self.createDataSource()
                 self.reloadData()
             }
         }
-       // reloadData()
     }
     
-    // MARK: - setup Navigation Bar
+    // MARK: - Setup Navigation Bar
     private func setupNavigationBar() {
         let titleLabel = UILabel()
         titleLabel.font = UIFont(name: "MarkPro-Medium", size: 18)
@@ -63,24 +62,29 @@ class ProductDetailsViewController: UIViewController {
     
 
     
-    // MARK: - setup Collection View
+    // MARK: - Setup Collection View
     private func setupCollectionView() {
 
+        let topBarHeight = (navigationController?.navigationBar.frame.height ?? 0) + (view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0)
+        
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCompositionalLayout())
         collectionView.backgroundColor = .backgroundColor
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(collectionView)
+      
+        view.insertSubview(collectionView, belowSubview: productDetailsBottomView)
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: topBarHeight),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            collectionView.bottomAnchor.constraint(equalTo: productDetailsBottomView.topAnchor )
             
         ])
         collectionView.isScrollEnabled = false
         collectionView.register(ProductDetailCVCell.self, forCellWithReuseIdentifier: ProductDetailCVCell.reuseId)
+        collectionView.clipsToBounds = false
     }
     
+    // MARK: - Reload Data
     private func reloadData() {
         var snapShot = NSDiffableDataSourceSnapshot<DetailCVViewModel.Section, DetailCVViewModel.Item>()
         snapShot.appendSections([.images])
@@ -90,14 +94,14 @@ class ProductDetailsViewController: UIViewController {
         dataSource?.apply(snapShot, animatingDifferences: true)
     }
     
-    // MARK: - setup Bottom View
+    // MARK: - Setup Bottom View
     func setupButtomView() {
         let productDetailBottomViewModel = ProductDetailBottomViewModel(productDetailModel: model)
         productDetailsBottomView = ProductDetailsBottomView(productDetailBottomViewModel: productDetailBottomViewModel)
         productDetailsBottomView.backgroundColor = .white
         let tabBarHeight = tabBarController?.tabBar.frame.height ?? 0
         view.addSubviewAtTheBottom(subview: productDetailsBottomView, bottomOffset: tabBarHeight)
-        
+        productDetailsBottomView.clipsToBounds = false
     }
 }
 
@@ -114,7 +118,7 @@ extension ProductDetailsViewController {
     }
 }
 
-// MARK: - create Compositional Layout
+// MARK: - Create Compositional Layout
 extension ProductDetailsViewController {
     private func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
         let layout = UICollectionViewCompositionalLayout {  section, layoutEnvironment in
@@ -126,14 +130,14 @@ extension ProductDetailsViewController {
     private func createSectionLayout() -> NSCollectionLayoutSection? {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.6), heightDimension: .fractionalWidth(0.8))
+
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalHeight(0.7), heightDimension: .fractionalHeight(0.9))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPagingCentered
-        section.interGroupSpacing = 10
-        section.contentInsets = .init(top: 30, leading: 0, bottom: 0, trailing: 0)
+        section.interGroupSpacing = 15
+        section.contentInsets = .init(top: 20, leading: 0, bottom: 0, trailing: 0)
         
         section.visibleItemsInvalidationHandler = { (items, offset, environment) in
             items.forEach { item in

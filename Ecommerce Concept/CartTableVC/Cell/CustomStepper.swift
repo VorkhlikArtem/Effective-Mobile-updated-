@@ -63,6 +63,11 @@ class CustomStepper: UIStackView {
         layer.cornerRadius = self.frame.width / 2
     }
     
+    func configure(with count: Int) {
+        self.count = count
+        countLabel.text = String(count)
+    }
+    
     @objc private func buttonTapped(button : UIButton) {
         if button.tag == 1 {
             count += 1

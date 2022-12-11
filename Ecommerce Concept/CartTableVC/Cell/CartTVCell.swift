@@ -38,7 +38,7 @@ class CartTVCell: UITableViewCell {
     
     let stepper = CustomStepper()
     
-    let deleteButton = UIButton(image: "delete", imageColor: #colorLiteral(red: 0.2123073339, green: 0.2123567462, blue: 0.3040331602, alpha: 1))
+    let deleteButton = UIButton(image: "delete", imageColor: #colorLiteral(red: 0.3431054292, green: 0.3447591231, blue: 0.4955973926, alpha: 1))
     
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -61,6 +61,7 @@ class CartTVCell: UITableViewCell {
     
     override func prepareForReuse() {
         productImageView.image = nil
+        stepper.configure(with: 1)
     }
     
     override func layoutSubviews() {
@@ -73,7 +74,7 @@ class CartTVCell: UITableViewCell {
 
     func configure(with cartCellItem: CartCellViewModel) {
         productImageView.set(imageURL: cartCellItem.images)
-        priceLabel.text = "$\(cartCellItem.price.formattedWithSeparator)"
+        priceLabel.text = cartCellItem.formattedPrice
         modelName.text = cartCellItem.title
     }
     

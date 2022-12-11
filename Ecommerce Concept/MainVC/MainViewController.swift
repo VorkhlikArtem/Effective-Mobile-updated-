@@ -12,6 +12,7 @@ class MainViewController: UIViewController {
     
     var collectionView: UICollectionView!
     lazy var filterView = FilterView()
+    let refreshControl = UIRefreshControl()
     lazy var visualEffectView: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: .dark)
         let visualEffectView = UIVisualEffectView(effect: blurEffect)
@@ -19,86 +20,50 @@ class MainViewController: UIViewController {
         return visualEffectView
     }()
     
-    typealias DataSourceType = UICollectionViewDiffableDataSource<ViewModel.Section, ViewModel.Item>
-
-    enum ViewModel {
-        enum Section: String, Hashable, CaseIterable {
-            case selectCategorySection = "Select Category"
-            case hotSalesSection = "Hot Sales"
-            case bestSellersSection = "Best Seller"
-        }
-        enum Item : Hashable {
-            case selectCategoryItem(category: CategoryItem  )
-            case hotSalesItem(hotSalesItem: HotSalesItem)
-            case bestSellerItem(bestSellersItem: BestSellersItem)
-            
-            func hash(into hasher: inout Hasher) {
-                switch self {
-                
-                case .selectCategoryItem(let category):
-                    hasher.combine(category.title )
-                case .hotSalesItem(let hotSalesItem):
-                    hasher.combine(hotSalesItem.id)
-                case .bestSellerItem(let bestSellersItem):
-                    hasher.combine(bestSellersItem.id)
-                }
-            }
-            
-            static func == (lhs: Item, rhs: Item) -> Bool {
-                switch (lhs, rhs) {
-                case (.selectCategoryItem(let lCategory) , .selectCategoryItem(let rCategory)):
-                    return lCategory.title == rCategory.title
-                case (.hotSalesItem(let lHotSalesItem), .hotSalesItem(let rHotSalesItem) ):
-                    return lHotSalesItem.id == rHotSalesItem.id
-                case (.bestSellerItem(let lBestSellersItem), .bestSellerItem(let rBestSellersItem)):
-                    return lBestSellersItem.id == rBestSellersItem.id
-                default: return false
-                }
-            }
-        }
-    }
+    typealias DataSourceType = UICollectionViewDiffableDataSource<MainViewModel.Section, MainViewModel.Item>
     
     var dataSource: DataSourceType!
-    var model = Model()
-    let networkManager = DataFetcher()
-    
-    struct Model{
-        var selectCategoryImageNames = [CategoryItem]()
-        var hotSalesItem = [HotSalesItem]()
-        var bestSellerItem = [BestSellersItem]()
-    }
+    var model = MainModel()
+    let dataFetcher = DataFetcher()
     
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
         setupCollectionView()
         dataSource = createDataSource()
+        
         collectionView.dataSource = dataSource
         collectionView.delegate = self
-        collectionView.allowsSelection = true
-        collectionView.allowsSelectionDuringEditing = true
+        setupRefreshControl()
         
         model.selectCategoryImageNames = CategoryItem.categorySectionModel
-        
-//        let mainResponse = Bundle.main.decode(MainResponse.self, from: "mainData.json")
-//        self.model.hotSalesItem = mainResponse.homeStore
-//        self.model.bestSellerItem = mainResponse.bestSeller
-
         self.reloadData()
-        
-        networkManager.getMain { [weak self] mainResponse in
+        getData()
+    }
+    
+    private func getData() {
+        dataFetcher.getMain { [weak self] mainResponse in
             guard let self = self else {return}
-            guard let mainResponse = mainResponse else {return}
+            guard let mainResponse = mainResponse else { self.refreshControl.endRefreshing()
+                return}
             self.model.hotSalesItem = mainResponse.homeStore
             self.model.bestSellerItem = mainResponse.bestSeller
             DispatchQueue.main.async {
                 self.reloadData()
+                self.refreshControl.endRefreshing()
             }
         }
-       
-        
+    }
+    
+    // MARK: - Setup Refresh Control
+    private func setupRefreshControl() {
+        collectionView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(updateMain), for: .valueChanged)
+    }
+    
+    @objc private func updateMain() {
+       getData()
     }
     
     // MARK: -  NavigationBar & CollectionView setups
@@ -123,18 +88,18 @@ class MainViewController: UIViewController {
     }
     
   
-    // MARK: - reloadData
+    // MARK: - Reload Data
     private func reloadData() {
-        var snapShot = NSDiffableDataSourceSnapshot<ViewModel.Section, ViewModel.Item>()
-        snapShot.appendSections(ViewModel.Section.allCases)  // change
+        var snapShot = NSDiffableDataSourceSnapshot<MainViewModel.Section, MainViewModel.Item>()
+        snapShot.appendSections(MainViewModel.Section.allCases)  // change
         
-        let selectCategoryItems = model.selectCategoryImageNames.map {ViewModel.Item.selectCategoryItem(category: $0) }
+        let selectCategoryItems = model.selectCategoryImageNames.map {MainViewModel.Item.selectCategoryItem(category: $0) }
         snapShot.appendItems(selectCategoryItems, toSection: .selectCategorySection)
         
-        let hotSalesItem = model.hotSalesItem.map {ViewModel.Item.hotSalesItem(hotSalesItem: $0) }
+        let hotSalesItem = model.hotSalesItem.map {MainViewModel.Item.hotSalesItem(hotSalesItem: $0) }
         snapShot.appendItems(hotSalesItem, toSection: .hotSalesSection)
 
-        let bestSellerItem = model.bestSellerItem.map {ViewModel.Item.bestSellerItem(bestSellersItem: $0) }
+        let bestSellerItem = model.bestSellerItem.map {MainViewModel.Item.bestSellerItem(bestSellersItem: $0) }
         snapShot.appendItems(bestSellerItem, toSection: .bestSellersSection)
         
         dataSource?.apply(snapShot, animatingDifferences: true)
@@ -248,7 +213,7 @@ extension MainViewController {
         
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
+
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(Constants.bestSellersGroupAspectRatio) )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 2)
         group.interItemSpacing = .fixed(14)
@@ -257,7 +222,6 @@ extension MainViewController {
         section.contentInsets = .init(top: 16, leading: 14, bottom: 14, trailing: 14)
         section.interGroupSpacing = 12
        
-        
         let sectionHeader = createSectionHeaderLayout()
         section.boundarySupplementaryItems = [sectionHeader]
         return section
@@ -305,8 +269,7 @@ extension MainViewController {
     }
 }
 
-// MARK: - BestSellerCellDelegate
-
+// MARK: - Best Seller Cell Delegate
 extension MainViewController: BestSellerCellDelegate {
     func toggleIsFavoriteProperty(_ cell: UICollectionViewCell) {
         guard let indexPath = collectionView.indexPath(for: cell) else {return}
@@ -322,10 +285,11 @@ extension MainViewController: FilterViewDelegate {
         view.addSubviewWithWholeFilling(subview: visualEffectView)
         filterView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(filterView)
+        let topBarHeight = (navigationController?.navigationBar.frame.height ?? 0) + (view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0)
         NSLayoutConstraint.activate([
             filterView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
             filterView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
-            filterView.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
+            filterView.topAnchor.constraint(equalTo: view.topAnchor, constant: topBarHeight),
         ])
         
         NotificationCenter.default.post(name: .hideFilterTables, object: nil)
@@ -358,26 +322,3 @@ extension MainViewController: FilterViewDelegate {
     }
 }
 
-
-
-
-
-
-//MARK: - SwiftUI
-import SwiftUI
-struct MainViewControllerProvider: PreviewProvider {
-    static var previews: some View {
-        ContainerView().ignoresSafeArea(.all).previewInterfaceOrientation(.portrait)
-    }
-    struct ContainerView: UIViewControllerRepresentable {
-        
-        let viewController = MainViewController()
-        
-        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-        }
-
-        func makeUIViewController(context: Context) -> some UIViewController {
-            return viewController
-        }
-    }
-}

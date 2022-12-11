@@ -11,20 +11,20 @@ class ProductDetailCVCell: UICollectionViewCell {
     
     static var reuseId: String = "ProductDetailCVCell"
     
-    let hotSalesImageView = WebImageView()
+    let productImageView = WebImageView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .green
+        backgroundColor = .white
         layer.cornerRadius = 15
-        hotSalesImageView.contentMode = .scaleAspectFill
+        productImageView.contentMode = .scaleAspectFill
         setupConstraints()
         
     
     }
     
     override func prepareForReuse() {
-        hotSalesImageView.image = nil
+        productImageView.image = nil
     }
     
     override func layoutSubviews() {
@@ -36,23 +36,23 @@ class ProductDetailCVCell: UICollectionViewCell {
         self.layer.shadowOffset = .zero
         self.layer.shadowRadius = 30
         
-        hotSalesImageView.layer.cornerRadius = 15
+        productImageView.layer.cornerRadius = 15
     }
     
     
     func configure(with urlString: String) {
-        hotSalesImageView.set(imageURL: urlString)
+        productImageView.set(imageURL: urlString)
     }
     
     func setupConstraints() {
-        hotSalesImageView.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(hotSalesImageView)
-        hotSalesImageView.clipsToBounds = true
+        productImageView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(productImageView)
+        productImageView.clipsToBounds = true
         NSLayoutConstraint.activate([
-            hotSalesImageView.topAnchor.constraint(equalTo: topAnchor),
-            hotSalesImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            hotSalesImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            hotSalesImageView.trailingAnchor.constraint(equalTo: trailingAnchor)
+            productImageView.topAnchor.constraint(equalTo: topAnchor),
+            productImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            productImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            productImageView.trailingAnchor.constraint(equalTo: trailingAnchor)
 
         ])
     }

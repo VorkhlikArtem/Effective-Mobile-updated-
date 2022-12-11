@@ -12,20 +12,19 @@ class MainTabBarController: UITabBarController {
         super.viewDidLoad()
         tabBar.tintColor = .blackTextColor
         tabBar.backgroundColor = .white
-       //let boldConfig = UIImage.SymbolConfiguration(weight: .medium)
-        
+        setupTabBar()
+    }
+    
+    private func setupTabBar() {
         let mainNC = generateNavigationController(rootViewController: MainViewController(), title: "Main", image: "house")
         
         let cartVC = CartTableViewController()
         cartVC.viewModel = CartTableViewModel()
         let cartNC = generateNavigationController(rootViewController: cartVC, title: "Cart", image: "cart")
   
-        
         viewControllers = [mainNC, cartNC]
-        //tabBar.items?[1].badgeValue = "sds"
-        
-       
     }
+    
     
     private func generateNavigationController(rootViewController: UIViewController, title: String, image: String) -> UIViewController {
         let navigationVC = UINavigationController(rootViewController: rootViewController)

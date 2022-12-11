@@ -107,10 +107,10 @@ class ProductDetailsBottomView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         self.layer.cornerRadius = 30
-        layer.shadowOpacity = 0.2
+        layer.shadowOpacity = 0.7
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = .zero
-        layer.shadowRadius = 10
+        layer.shadowRadius = 30
         
         likeButton.layer.cornerRadius = 5
         likeButton.layer.shadowOpacity = 0.1
@@ -206,8 +206,8 @@ class ProductDetailsBottomView: UIView {
          
             addToCartButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
             addToCartButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
-            addToCartButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
-            addToCartButton.topAnchor.constraint(equalTo: colorSegmentedControl.bottomAnchor, constant: 27)
+            addToCartButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
+            addToCartButton.topAnchor.constraint(equalTo: colorSegmentedControl.bottomAnchor, constant: 22)
       
         ])
         

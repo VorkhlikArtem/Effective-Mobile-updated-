@@ -22,3 +22,9 @@ extension CartCellViewModel {
  
     }
 }
+
+extension CartCellViewModel {
+    var formattedPrice: String {
+         return "$" + String(format: "%.02f", Float(price))
+    }
+}
