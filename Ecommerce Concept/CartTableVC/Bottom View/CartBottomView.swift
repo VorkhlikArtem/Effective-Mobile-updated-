@@ -40,11 +40,10 @@ class CartBottomView: UIView {
         checkoutButton.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(checkoutButton)
         NSLayoutConstraint.activate([
-          //  checkoutButton.topAnchor.constraint(equalTo: mainStack.bottomAnchor, constant: 27),
             checkoutButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 44),
             checkoutButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20),
             checkoutButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -44),
-
+            checkoutButton.heightAnchor.constraint(equalToConstant: 54)
         ])
         
         let bottomLine = UIView()

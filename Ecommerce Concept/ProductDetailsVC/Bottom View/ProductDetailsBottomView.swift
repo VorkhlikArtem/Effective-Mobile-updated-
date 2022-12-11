@@ -119,7 +119,7 @@ class ProductDetailsBottomView: UIView {
   
     }
     
-    // MARK: - Like button
+    // MARK: - Like Button
     @objc private func likeTapped(button: UIButton) {
         isFavorite.toggle()
     }
@@ -198,17 +198,14 @@ class ProductDetailsBottomView: UIView {
             capacitySegmentedControl.centerYAnchor.constraint(equalTo: colorSegmentedControl.centerYAnchor),
             capacitySegmentedControl.leadingAnchor.constraint(equalTo: colorSegmentedControl.trailingAnchor, constant: 58),
             capacitySegmentedControl.heightAnchor.constraint(equalToConstant: 30)
-      
         ])
         
         self.addSubview(addToCartButton)
         NSLayoutConstraint.activate([
-         
             addToCartButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
             addToCartButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
             addToCartButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
             addToCartButton.topAnchor.constraint(equalTo: colorSegmentedControl.bottomAnchor, constant: 22)
-      
         ])
         
         self.addSubview(priceLabel)

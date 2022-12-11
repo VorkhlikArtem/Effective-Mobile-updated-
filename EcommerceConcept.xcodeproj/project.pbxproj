@@ -68,6 +68,7 @@
 		ACBABECD2944F02000599417 /* URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACBABECC2944F02000599417 /* URLs.swift */; };
 		ACBD004029465D3C00A99B2E /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACBD003F29465D3B00A99B2E /* MainModel.swift */; };
 		ACBD004229465DA400A99B2E /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACBD004129465DA400A99B2E /* MainViewModel.swift */; };
+		ACBD00452946781900A99B2E /* UIViewController + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACBD00442946781900A99B2E /* UIViewController + Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -134,6 +135,7 @@
 		ACBABECC2944F02000599417 /* URLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLs.swift; sourceTree = "<group>"; };
 		ACBD003F29465D3B00A99B2E /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
 		ACBD004129465DA400A99B2E /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		ACBD00442946781900A99B2E /* UIViewController + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -297,6 +299,7 @@
 				ACBABEC92944D79E00599417 /* UIApplication+.swift */,
 				AC48427829425CAB00090D5E /* Formatter.swift */,
 				AC7B9865293E4A310084832A /* NSNotification.Name + Extension.swift */,
+				ACBD00442946781900A99B2E /* UIViewController + Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -518,6 +521,7 @@
 				AC58786D293B8D6F00271423 /* HotSalesCell.swift in Sources */,
 				AC7B9866293E4A310084832A /* NSNotification.Name + Extension.swift in Sources */,
 				AC48428B2943EFE700090D5E /* CategorySectionModel.swift in Sources */,
+				ACBD00452946781900A99B2E /* UIViewController + Extension.swift in Sources */,
 				AC58786F293B8DE600271423 /* BestSellersCell.swift in Sources */,
 				ACBABECA2944D79E00599417 /* UIApplication+.swift in Sources */,
 				AC48428829437ADE00090D5E /* MainTabBarController.swift in Sources */,

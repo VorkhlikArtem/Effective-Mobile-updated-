@@ -33,6 +33,11 @@ class ProductDetailsViewController: UIViewController {
         }
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        setUIOrientation(.portrait)
+    }
+
     // MARK: - Setup Navigation Bar
     private func setupNavigationBar() {
         let titleLabel = UILabel()

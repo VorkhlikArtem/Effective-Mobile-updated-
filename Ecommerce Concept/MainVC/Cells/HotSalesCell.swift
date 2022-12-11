@@ -16,7 +16,6 @@ class HotSalesCell: UICollectionViewCell {
     let newLabel = UILabel(text: "New", font: .markProBold10(), textColor: .white, labelColor: .orangeColor)
     let titleLabel = UILabel(font: .markProBold25(), textColor: .white)
     let subtitleLabel = UILabel(font: .markProRegular11() , textColor: .white)
-   // let buyButton = UIButton(text: "Buy now!", font: .markProBold11(), textColor: .blackTextColor, buttonColor: .white)
     
     let buyButton: UIButton = {
         let button = UIButton.init(type: .system)
@@ -31,7 +30,7 @@ class HotSalesCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .green
+        backgroundColor = .white
         layer.cornerRadius = 10
         clipsToBounds = true
         hotSalesImageView.contentMode = .scaleAspectFill

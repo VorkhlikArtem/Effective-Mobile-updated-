@@ -33,4 +33,15 @@ class MainTabBarController: UITabBarController {
         return navigationVC
     }
     
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        guard let nc = selectedViewController as? UINavigationController,
+              let topVC = nc.topViewController,
+              topVC.isKind(of: ProductDetailsViewController.self) else {
+                  return .all
+              }
+        
+        return .portrait
+    }
+    
 }

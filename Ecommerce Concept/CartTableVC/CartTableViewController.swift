@@ -18,16 +18,14 @@ class CartTableViewController: UIViewController {
         super.viewDidLoad()
 
         tableView = UITableView()
-        view.addSubviewWithWholeFilling(subview: tableView)
-        self.tableView.dataSource = self
+        tableView.dataSource = self
         tableView.delegate = self
-        self.navigationController?.tabBarItem.badgeColor = .blackTextColor
-        setConstraints()
         tableView.register(CartTVCell.self, forCellReuseIdentifier: CartTVCell.reuseId)
         tableView.backgroundColor = .blackTextColor
         
+        self.navigationController?.tabBarItem.badgeColor = .blackTextColor
+        setConstraints()
         setupCallBacks()
-
         viewModel.getData()
     }
     
@@ -45,7 +43,6 @@ class CartTableViewController: UIViewController {
                 self.tableView.reloadData()
                 self.bottomCartView.configure(with: viewModel.bottomCartViewModel)
                 self.navigationController?.tabBarItem.badgeValue = viewModel.totalCountString
-                self.tabBarController?.tabBar.items?[1].badgeValue = viewModel.totalCountString
             }
         }
         
@@ -60,6 +57,14 @@ class CartTableViewController: UIViewController {
     private func setConstraints() {
         let tabBarHeight = tabBarController?.tabBar.frame.height ?? 0
         view.addSubviewAtTheBottom(subview: bottomCartView, bottomOffset: tabBarHeight)
+        
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(tableView)
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: bottomCartView.topAnchor),])
     }
 }
 
