@@ -52,6 +52,6 @@ extension ProductDetailBottomViewModel {
 
 extension ProductDetailBottomViewModelProtocol {
     var formatedPrice: String {
-        return "$" + price.formattedWithSeparator + ".00"
+        return price.formattedPriceWithSeparatorAndTwoFractionDigits
     }
 }

@@ -95,11 +95,13 @@ class BestSellerCell: UICollectionViewCell {
     
     func configure(with bestSellerModel: BestSellersItem) {
         bestSellersImageView.set(imageURL: bestSellerModel.picture)
-        currentPrice.text = "$\(bestSellerModel.discountPrice)"
-        formerPrice.attributedText = NSMutableAttributedString(string: "$\(bestSellerModel.priceWithoutDiscount)", attributes: [NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue])
+        currentPrice.text = bestSellerModel.formattedDiscountPrice
+        formerPrice.attributedText = NSMutableAttributedString(string: bestSellerModel.formattedPriceWithoutDiscount, attributes: [NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue])
         modelName.text = bestSellerModel.title
         
         isFavorite = bestSellerModel.isFavorites
+        
+        
     }
     
     func setupConstraints() {

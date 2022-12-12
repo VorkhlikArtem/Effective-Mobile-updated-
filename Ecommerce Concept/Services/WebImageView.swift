@@ -26,6 +26,10 @@ class WebImageView: UIImageView {
         }
         
         let dataTask = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+            if let _ = error {
+                self?.image = nil
+                return
+            }
             DispatchQueue.main.async {
                 if let data = data, let response = response {
                     self?.handleLoadedImage(data: data, response: response)

@@ -22,3 +22,22 @@ extension Numeric {
         
     }
 }
+
+extension Numeric {
+    var formattedPriceWithSeparatorAndTwoFractionDigits: String {
+
+        let formatter = NumberFormatter()
+        formatter.currencyCode = "USD"
+        formatter.currencySymbol = "$"
+        formatter.minimumFractionDigits = 2
+        formatter.maximumFractionDigits = 2
+        formatter.numberStyle = .decimal
+        formatter.numberStyle = .currencyAccounting
+        formatter.groupingSeparator = ","
+        return formatter.string(for: self) ?? ""
+    }
+}
+
+
+
+

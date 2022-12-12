@@ -91,7 +91,7 @@ class MainViewController: UIViewController {
     // MARK: - Reload Data
     private func reloadData() {
         var snapShot = NSDiffableDataSourceSnapshot<MainViewModel.Section, MainViewModel.Item>()
-        snapShot.appendSections(MainViewModel.Section.allCases)  // change
+        snapShot.appendSections(MainViewModel.Section.allCases)
         
         let selectCategoryItems = model.selectCategoryImageNames.map {MainViewModel.Item.selectCategoryItem(category: $0) }
         snapShot.appendItems(selectCategoryItems, toSection: .selectCategorySection)

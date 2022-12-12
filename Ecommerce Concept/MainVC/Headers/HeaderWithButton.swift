@@ -57,7 +57,6 @@ class HeaderWithButton: UICollectionReusableView {
         NSLayoutConstraint.activate([
             seeMoreButton.centerYAnchor.constraint(equalTo: centerYAnchor),
             seeMoreButton.trailingAnchor.constraint(equalTo: trailingAnchor),
-           // seeMoreButton.leadingAnchor.constraint(equalTo: title.trailingAnchor, constant: 20)
         ])
     }
 }

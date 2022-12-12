@@ -34,17 +34,6 @@ extension UIView {
 
 }
 
-//extension UIView {
-//    var viewOfVC: UIView {
-//        var superView = self
-//        while true {
-//            guard let superviewOfSuperview = superView.superview else {break}
-//            superView = superviewOfSuperview
-//            print(superView)
-//        }
-//        return superView
-//    }
-//}
 
 
 

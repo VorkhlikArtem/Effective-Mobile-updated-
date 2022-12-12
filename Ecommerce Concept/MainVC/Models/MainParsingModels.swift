@@ -33,3 +33,13 @@ struct BestSellersItem: Decodable {
     var picture: String
 }
 
+
+extension BestSellersItem {
+    var formattedDiscountPrice: String {
+        "$\(discountPrice.formattedWithSeparator)"
+    }
+    
+    var formattedPriceWithoutDiscount: String {
+        "$\(priceWithoutDiscount.formattedWithSeparator)"
+    }
+}

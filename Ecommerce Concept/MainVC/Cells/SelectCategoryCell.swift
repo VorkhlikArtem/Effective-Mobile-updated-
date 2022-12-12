@@ -86,18 +86,9 @@ class SelectCategoryCell: UICollectionViewCell {
         self.contentView.addSubview(categoryTitle)
         NSLayoutConstraint.activate([
             categoryTitle.centerXAnchor.constraint(equalTo: centerXAnchor),
-           // categoryTitle.bottomAnchor.constraint(equalTo: bottomAnchor),
             categoryTitle.topAnchor.constraint(equalTo: circleView.bottomAnchor, constant: 7)
 
         ])
-        
-//        NSLayoutConstraint.activate([
-//            categoryImageView.topAnchor.constraint(equalTo: topAnchor),
-//            categoryImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
-//            categoryImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
-//            categoryImageView.trailingAnchor.constraint(equalTo: trailingAnchor)
-//
-//        ])
     }
     
     override func layoutSubviews() {
