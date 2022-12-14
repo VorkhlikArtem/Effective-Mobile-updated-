@@ -8,6 +8,7 @@
 import UIKit
 
 class MainViewController: UIViewController {
+    
     var selectedCategory = 0
     
     var collectionView: UICollectionView!
@@ -26,6 +27,7 @@ class MainViewController: UIViewController {
     var model = MainModel()
     let dataFetcher = DataFetcher()
     
+    var hotSalesFooter: PageControlFooter?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +53,8 @@ class MainViewController: UIViewController {
             self.model.bestSellerItem = mainResponse.bestSeller
             DispatchQueue.main.async {
                 self.reloadData()
+                let numberOfItems = self.dataSource.snapshot().numberOfItems(inSection: .hotSalesSection)
+                self.hotSalesFooter?.configure(numberOfPages: numberOfItems)
                 self.refreshControl.endRefreshing()
             }
         }
@@ -84,6 +88,7 @@ class MainViewController: UIViewController {
         collectionView.register(SelectCategoryCell.self, forCellWithReuseIdentifier: SelectCategoryCell.reuseId)
         collectionView.register(HotSalesCell.self, forCellWithReuseIdentifier: HotSalesCell.reuseId)
         collectionView.register(BestSellerCell.self, forCellWithReuseIdentifier: BestSellerCell.reuseId)
+        collectionView.register(PageControlFooter.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: PageControlFooter.reuseId)
         
     }
     
@@ -136,17 +141,41 @@ extension MainViewController {
         dataSource.supplementaryViewProvider = {
             collectionView, kind, indexPath in
             
-            let section = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
-            guard let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HeaderWithButton.reuseId, for: indexPath) as? HeaderWithButton else {return nil}
-            
-            switch section {
-            case .selectCategorySection:
-                sectionHeader.configure(title: section.rawValue, buttonText: "view all")
-            default:
-                sectionHeader.configure(title: section.rawValue, buttonText: "see more")
+            switch kind {
+                
+            case UICollectionView.elementKindSectionHeader:
+                
+                let section = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
+                guard let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HeaderWithButton.reuseId, for: indexPath) as? HeaderWithButton else {return nil}
+                
+                switch section {
+                case .selectCategorySection:
+                    sectionHeader.configure(title: section.rawValue, buttonText: "view all")
+
+                default:
+                    sectionHeader.configure(title: section.rawValue, buttonText: "see more")
+                }
+                return sectionHeader
+                
+            case UICollectionView.elementKindSectionFooter:
+                let section = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
+                switch section {
+                
+                case .hotSalesSection:
+                    guard let sectionFooter = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: PageControlFooter.reuseId, for: indexPath) as? PageControlFooter else {return nil}
+                    self.hotSalesFooter = sectionFooter
+//                    let numberOfItems = self.dataSource.snapshot().numberOfItems(inSection: section)
+//                    
+//                    sectionFooter.configure(numberOfPages: numberOfItems)
+                    return sectionFooter
+               
+                default:return nil
+                }
+                
+            default: return nil
             }
-            return sectionHeader
         }
+        
         return dataSource
     }
 }
@@ -203,9 +232,21 @@ extension MainViewController {
         section.contentInsets = .init(top: 16, leading: 0, bottom: 0, trailing: 0)
         section.orthogonalScrollingBehavior = .groupPagingCentered
         
+        section.visibleItemsInvalidationHandler = { [weak self] (items, offset, env) -> Void in
+            guard let self = self,
+                  let itemWidth = items.last?.bounds.width else { return }
+            let insets = (env.container.contentSize.width - itemWidth)
+            let page = offset.x / (itemWidth + insets)
+            self.didChangeCollectionViewPage(to: page)
+        }
+        
         let sectionHeader = createSectionHeaderLayout()
         sectionHeader.contentInsets = .init(top: 0, leading: 14, bottom: 0, trailing: 14)
-        section.boundarySupplementaryItems = [sectionHeader]
+        
+        let sectionFooter = createSectionFooterLayout()
+        sectionFooter.contentInsets = .init(top: 0, leading: 14, bottom: 0, trailing: 14)
+        
+        section.boundarySupplementaryItems = [sectionHeader, sectionFooter]
         return section
     }
     
@@ -231,6 +272,12 @@ extension MainViewController {
         let sectionHeaderSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(1))
         let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: sectionHeaderSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
         return sectionHeader
+    }
+    
+    private func createSectionFooterLayout() -> NSCollectionLayoutBoundarySupplementaryItem {
+        let sectionFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(1))
+        let sectionFooter = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: sectionFooterSize, elementKind: UICollectionView.elementKindSectionFooter, alignment: .bottom)
+        return sectionFooter
     }
 }
 
@@ -322,3 +369,11 @@ extension MainViewController: FilterViewDelegate {
     }
 }
 
+// MARK: - Paging for Section Footers Handling
+extension MainViewController {
+    func didChangeCollectionViewPage (to page: CGFloat) {
+        print(page)
+        hotSalesFooter?.changeCurrentPage(to: page)
+    }
+
+}

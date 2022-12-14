@@ -47,6 +47,7 @@
 		AC69E5DD29422DD400FDD20A /* CustomStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC69E5DC29422DD400FDD20A /* CustomStepper.swift */; };
 		AC69E5DF2942337100FDD20A /* CartParsingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC69E5DE2942337100FDD20A /* CartParsingModel.swift */; };
 		AC69E5E12942357700FDD20A /* CartTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC69E5E02942357700FDD20A /* CartTableViewModel.swift */; };
+		AC6E2BF6294A104B0006D858 /* PageControlFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6E2BF5294A104B0006D858 /* PageControlFooter.swift */; };
 		AC7B9866293E4A310084832A /* NSNotification.Name + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7B9865293E4A310084832A /* NSNotification.Name + Extension.swift */; };
 		AC7B9869293E698E0084832A /* ProductDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7B9868293E698E0084832A /* ProductDetailsViewController.swift */; };
 		AC7B986B293E6A4C0084832A /* ProductDetailsBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7B986A293E6A4C0084832A /* ProductDetailsBottomView.swift */; };
@@ -109,6 +110,7 @@
 		AC69E5DC29422DD400FDD20A /* CustomStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStepper.swift; sourceTree = "<group>"; };
 		AC69E5DE2942337100FDD20A /* CartParsingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartParsingModel.swift; sourceTree = "<group>"; };
 		AC69E5E02942357700FDD20A /* CartTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartTableViewModel.swift; sourceTree = "<group>"; };
+		AC6E2BF5294A104B0006D858 /* PageControlFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageControlFooter.swift; sourceTree = "<group>"; };
 		AC7B9865293E4A310084832A /* NSNotification.Name + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSNotification.Name + Extension.swift"; sourceTree = "<group>"; };
 		AC7B9868293E698E0084832A /* ProductDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsViewController.swift; sourceTree = "<group>"; };
 		AC7B986A293E6A4C0084832A /* ProductDetailsBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsBottomView.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 			children = (
 				AC04F3F3293CD362008CFD18 /* HeaderWithButton.swift */,
 				AC04F3F5293CDC0B008CFD18 /* HeaderWithoutButton.swift */,
+				AC6E2BF5294A104B0006D858 /* PageControlFooter.swift */,
 			);
 			path = Headers;
 			sourceTree = "<group>";
@@ -498,6 +501,7 @@
 				ACBD00452946781900A99B2E /* UIViewController + Extension.swift in Sources */,
 				AC58786F293B8DE600271423 /* BestSellersCell.swift in Sources */,
 				ACBABECA2944D79E00599417 /* UIApplication+.swift in Sources */,
+				AC6E2BF6294A104B0006D858 /* PageControlFooter.swift in Sources */,
 				AC48428829437ADE00090D5E /* MainTabBarController.swift in Sources */,
 				AC5B32852940D5E6003DF38F /* ProductCapacityViewModel.swift in Sources */,
 				AC5B32832940CD3B003DF38F /* CapacitySegmentedControl.swift in Sources */,
