@@ -83,7 +83,6 @@ class MainViewController: UIViewController {
         collectionView.backgroundColor = .backgroundColor
         view.addSubview(collectionView)
         
-        collectionView.register(HeaderWithoutButton.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderWithoutButton.reuseId)
         collectionView.register(HeaderWithButton.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderWithButton.reuseId)
         collectionView.register(SelectCategoryCell.self, forCellWithReuseIdentifier: SelectCategoryCell.reuseId)
         collectionView.register(HotSalesCell.self, forCellWithReuseIdentifier: HotSalesCell.reuseId)
@@ -164,9 +163,7 @@ extension MainViewController {
                 case .hotSalesSection:
                     guard let sectionFooter = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: PageControlFooter.reuseId, for: indexPath) as? PageControlFooter else {return nil}
                     self.hotSalesFooter = sectionFooter
-//                    let numberOfItems = self.dataSource.snapshot().numberOfItems(inSection: section)
-//                    
-//                    sectionFooter.configure(numberOfPages: numberOfItems)
+
                     return sectionFooter
                
                 default:return nil
@@ -372,7 +369,7 @@ extension MainViewController: FilterViewDelegate {
 // MARK: - Paging for Section Footers Handling
 extension MainViewController {
     func didChangeCollectionViewPage (to page: CGFloat) {
-        print(page)
+       // print(page)
         hotSalesFooter?.changeCurrentPage(to: page)
     }
 

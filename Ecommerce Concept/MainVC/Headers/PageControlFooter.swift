@@ -24,7 +24,7 @@ class PageControlFooter: UICollectionReusableView {
         return view
     }()
     
-    var circlesDiameter: CGFloat = 10
+    var circlesDiameter: CGFloat = 12
     
     override init(frame: CGRect) {
         super.init(frame: frame)
