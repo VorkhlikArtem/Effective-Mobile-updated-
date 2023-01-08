@@ -26,7 +26,9 @@ class MainViewController: UIViewController {
     
     var dataSource: DataSourceType!
     var model = MainModel()
-    let dataFetcher = DataFetcher()
+    let dataFetcher = CombineNetworkManager()
+    
+    var cancellable: AnyCancellable?
     
     var hotSalesFooter: PageControlFooter?
     
@@ -45,26 +47,10 @@ class MainViewController: UIViewController {
         getData()
     }
     
-//    private func getData() {
-//        dataFetcher.getMain { [weak self] mainResponse in
-//            guard let self = self else {return}
-//            guard let mainResponse = mainResponse else { self.refreshControl.endRefreshing()
-//                return}
-//            self.model.hotSalesItem = mainResponse.homeStore
-//            self.model.bestSellerItem = mainResponse.bestSeller
-//            DispatchQueue.main.async {
-//                self.reloadData()
-//                let numberOfItems = self.dataSource.snapshot().numberOfItems(inSection: .hotSalesSection)
-//                self.hotSalesFooter?.configure(numberOfPages: numberOfItems)
-//                self.refreshControl.endRefreshing()
-//            }
-//        }
-//    }
     
-    var cancellables: Set<AnyCancellable> = []
     
     private func getData() {
-        dataFetcher.getMain1()
+        cancellable = dataFetcher.getMain()
             .sink { [weak self] completion in
                 switch completion {
                 case .finished: break
@@ -82,7 +68,6 @@ class MainViewController: UIViewController {
                 self.hotSalesFooter?.configure(numberOfPages: numberOfItems)
                 self.refreshControl.endRefreshing()
             }
-            .store(in: &cancellables)
 
     }
     

@@ -12,14 +12,15 @@ struct CartCellViewModel {
     let images: String
     let price: Int
     let title: String
+    let count: Int
 }
 
 extension CartCellViewModel {
-    init(from cartItemModel: CartItem) {
-        images = cartItemModel.images
-        price = cartItemModel.price
-        title = cartItemModel.title
- 
+    init(from cartItemModel: CountableCartItem) {
+        images = cartItemModel.cartItem.images
+        price = cartItemModel.cartItem.price
+        title = cartItemModel.cartItem.title
+        count = cartItemModel.count
     }
 }
 

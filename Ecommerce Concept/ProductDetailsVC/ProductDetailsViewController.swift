@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 class ProductDetailsViewController: UIViewController {
     
@@ -13,24 +14,31 @@ class ProductDetailsViewController: UIViewController {
     var dataSource: UICollectionViewDiffableDataSource<DetailCVViewModel.Section, DetailCVViewModel.Item>?
     
     var productDetailsBottomView: ProductDetailsBottomView!
-    let networkManager = DataFetcher()
+    let networkManager = CombineNetworkManager()
     var model: ProductDetailModel!
+    
+    var cancellable: AnyCancellable?
         
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .backgroundColor
         setupNavigationBar()
-        networkManager.getDetail { [weak self] productDetailModel in
-            guard let self = self,
-                  let productDetailModel = productDetailModel else {return}
-            self.model = productDetailModel
-            DispatchQueue.main.async {
+        
+        cancellable = networkManager.getDetail()
+            .sink { completion in
+                switch completion {
+                case .finished: break
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            } receiveValue: { [weak self] productDetailModel in
+                guard let self = self else {return}
+                self.model = productDetailModel
                 self.setupButtomView()
                 self.setupCollectionView()
                 self.createDataSource()
                 self.reloadData()
             }
-        }
     }
     
     override func viewDidLayoutSubviews() {

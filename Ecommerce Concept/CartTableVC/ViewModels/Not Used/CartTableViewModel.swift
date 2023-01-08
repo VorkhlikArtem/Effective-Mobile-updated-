@@ -41,7 +41,7 @@ final class CartTableViewModel: CartTableViewModelProtocol  {
     }
     
     var cartItems: [CartCellViewModel] {
-        countableCartItems.map { CartCellViewModel.init(from: $0.cartItem)}
+        countableCartItems.map { CartCellViewModel.init(from: $0)}
     }
     
     var bottomCartViewModel: CartBottomViewModelProtocol!

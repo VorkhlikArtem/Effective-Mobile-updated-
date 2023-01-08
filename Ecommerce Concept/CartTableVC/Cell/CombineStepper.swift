@@ -11,14 +11,13 @@ import Combine
 class CombineStepper: UIStackView {
     
     @Published private var count: Int = 1
+    
     private let countChangedSubject = PassthroughSubject<Int, Never>()
     var countChangedPublisher: AnyPublisher<Int, Never> {
         countChangedSubject.eraseToAnyPublisher()
     }
     
     var cancellables: Set<AnyCancellable> = []
-    
-   // weak var delegate: CustomStepperDelegate?
     
     private let plusButton: UIButton = {
         let button = UIButton(type: .system)
@@ -73,9 +72,7 @@ class CombineStepper: UIStackView {
     
     func configure(with count: Int) {
         self.count = count
-//        countLabel.text = String(count)
-//
-//        setOpacity()
+
     }
     
     @objc private func buttonTapped(button : UIButton) {
@@ -85,9 +82,6 @@ class CombineStepper: UIStackView {
             count -= 1
         }
         countChangedSubject.send(count)
-//        countLabel.text = String(count)
-//        setOpacity()
-//        delegate?.valueChanged(self, value: count)
     }
     
     private func setOpacity() {

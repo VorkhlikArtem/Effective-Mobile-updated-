@@ -8,19 +8,20 @@
 import UIKit
 import Combine
 
-//protocol CartTVCellDelegate: AnyObject {
-//    func countChanged(_ cell: UITableViewCell, count: Int)
-//    func deleteCell(_ cell: UITableViewCell)
-//}
-//
+enum CartCellEvent {
+    case quantityChanged(value: Int)
+    case deleteItem
+}
 
 class CartTVCell: UITableViewCell {
     
     static var reuseId: String = "CartTVCell"
     
-//    weak var delegate: CartTVCellDelegate?
-    var countChangeAction = PassthroughSubject<Int, Never>()
-    let deleteCellAction = PassthroughSubject<Void, Never>()
+    private let eventSubject = PassthroughSubject<CartCellEvent, Never>()
+    var eventPublisher: AnyPublisher<CartCellEvent, Never> {
+        eventSubject.eraseToAnyPublisher()
+    }
+    
     var cancellables: Set<AnyCancellable> = []
 
     private let productImageView = WebImageView()
@@ -41,7 +42,6 @@ class CartTVCell: UITableViewCell {
     }()
     
     private let stepper = CombineStepper()
-    
     private let deleteButton = UIButton(image: "delete", imageColor: #colorLiteral(red: 0.3431054292, green: 0.3447591231, blue: 0.4955973926, alpha: 1))
     
 
@@ -55,25 +55,21 @@ class CartTVCell: UITableViewCell {
         deleteButton.addTarget(self, action: #selector(deleteTapped), for: .touchUpInside)
         setupConstraints()
         
-        stepper.countChangedPublisher.receive(on: RunLoop.main) .sink { [weak self] count in
-            self?.countChangeAction.send(count)
+        stepper.countChangedPublisher.sink { [weak self] count in
+            self?.eventSubject.send(.quantityChanged(value: count))
         }
         .store(in: &stepper.cancellables)
         
-//        countChangeAction = stepper.countChangedAction
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-
-    
     override func prepareForReuse() {
+        super.prepareForReuse()
         productImageView.image = nil
-       // stepper.configure(with: 1)
         cancellables = Set<AnyCancellable>()
-//        stepper.cancellables = Set<AnyCancellable>()
     }
     
     override func layoutSubviews() {
@@ -88,11 +84,11 @@ class CartTVCell: UITableViewCell {
         productImageView.set(imageURL: cartCellItem.images)
         priceLabel.text = cartCellItem.formattedPrice
         modelName.text = cartCellItem.title
+        stepper.configure(with: cartCellItem.count)
     }
     
     @objc private func deleteTapped() {
-//        delegate?.deleteCell(self)
-        deleteCellAction.send(Void())
+        eventSubject.send(.deleteItem)
     }
     
     func setupConstraints() {
@@ -143,11 +139,3 @@ class CartTVCell: UITableViewCell {
     }
 
 }
-
-//extension CartTVCell: CustomStepperDelegate {
-//    func valueChanged(_ stepper: CustomStepper, value: Int) {
-//        delegate?.countChanged(self, count: value)
-//    }
-//
-//
-//}

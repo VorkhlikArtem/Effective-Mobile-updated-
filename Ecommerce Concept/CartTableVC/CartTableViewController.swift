@@ -27,7 +27,7 @@ class CartTableViewController: UIViewController {
         
         self.navigationController?.tabBarItem.badgeColor = .blackTextColor
         setConstraints()
-        setupCallBacks()
+        setupBindings()
         viewModel.getData()
     }
     
@@ -38,48 +38,34 @@ class CartTableViewController: UIViewController {
         }
     }
     
-    // MARK: - Setup CallBacks
-    private func setupCallBacks() {
-//        viewModel.fetchDataCallback = {[unowned self] viewModel in
-//            DispatchQueue.main.async {
-//                self.tableView.reloadData()
-//                self.bottomCartView.configure(with: viewModel.bottomCartViewModel)
-//               // self.navigationController?.tabBarItem.badgeValue = viewModel.totalCountString
-//            }
-//        }
-        
-//        viewModel.countChangeCallback = {[unowned self] totalPriceString, totalCountString in
-//            DispatchQueue.main.async {
-//                self.bottomCartView.configureTotalPrice(with: totalPriceString)
-//                self.navigationController?.tabBarItem.badgeValue = totalCountString
-//            }
-//        }
-        
+    // MARK: - Setup Binding
+    private func setupBindings() {
         viewModel.cartItemsPublisher.receive(on: DispatchQueue.main)
-            .sink { cartViewModel in
+            .sink { _ in
                 self.tableView.reloadData()
-               
             }.store(in: &cancellables)
         
         viewModel.bottomCartViewModelPublisher.receive(on: DispatchQueue.main)
             .sink { [weak self] bottomViewModel in
                 self?.bottomCartView.configure(with: bottomViewModel)
             }.store(in: &cancellables)
-            
         
-        if let tabBarItem = self.navigationController?.tabBarItem {
-            viewModel.totalCountStringPublisher
-                .receive(on: DispatchQueue.main)
-                .assign(to: \.badgeValue, on: tabBarItem)
-                .store(in: &cancellables)
-        }
-        
-        viewModel.totalPriceStringPublisher
+        viewModel.totalCountAndPriceStringPublisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] totalPriceString in
-                self?.bottomCartView.configureTotalPrice(with: totalPriceString)
+            .sink { [weak self] (totalPrice, totalCount) in
+                self?.bottomCartView.configureTotalPrice(with: totalPrice)
+                self?.navigationController?.tabBarItem.badgeValue = totalCount
             }.store(in: &cancellables)
-        
+    }
+    
+    private func handleCellEvent(indexPath: IndexPath, event: CartCellEvent) {
+        switch event {
+        case .quantityChanged(value: let value):
+            viewModel.countChanged(indexOfItem: indexPath.row, count: value)
+        case .deleteItem:
+            viewModel.deleteItem(at: indexPath.row)
+       //     tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
     }
     
     private func setConstraints() {
@@ -100,29 +86,17 @@ class CartTableViewController: UIViewController {
 extension CartTableViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.cartItems.count
-//        return viewModel.cartItemsPublisher.receive(on: DispatchQueue.main).sink { items in
-//            return items.count
-//        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CartTVCell.reuseId, for: indexPath) as! CartTVCell
         let cellItem = viewModel.cartItems[indexPath.row]
-        //cell.delegate = self
         cell.configure(with: cellItem)
         
-        cell.countChangeAction.receive(on: RunLoop.main)
-            .sink { [weak self] count in
-                print(indexPath)
-            self?.viewModel.countChanged(indexOfItem: indexPath.row, count: count)
+        cell.eventPublisher.receive(on: RunLoop.main)
+            .sink { [weak self] cartCellEvent in
+                self?.handleCellEvent(indexPath: indexPath, event: cartCellEvent)
             }.store(in: &cell.cancellables)
-
-        cell.deleteCellAction.receive(on: RunLoop.main)
-            .sink { [weak self] in
-                print(indexPath)
-            self?.viewModel.deleteItem(at: indexPath.row)
-            self?.tableView.deleteRows(at: [indexPath], with: .automatic)
-        }.store(in: &cell.cancellables)
         
         return cell
     }
@@ -135,20 +109,3 @@ extension CartTableViewController: UITableViewDataSource, UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
-
-//// MARK: - CartTVCellDelegate
-//
-//extension CartTableViewController: CartTVCellDelegate {
-//
-//    func countChanged(_ cell: UITableViewCell, count: Int) {
-//        guard let indexPath = tableView.indexPath(for: cell) else {return}
-//        viewModel.countChanged(indexOfItem: indexPath.row, count: count)
-//    }
-//
-//    func deleteCell(_ cell: UITableViewCell) {
-//        guard let indexPath = tableView.indexPath(for: cell) else {return}
-//        viewModel.deleteItem(at: indexPath.row)
-//        tableView.deleteRows(at: [indexPath], with: .automatic)
-//    }
-//}
-

@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AC012F352969EC62004660B9 /* CustomStepper(Combine).swift in Sources */ = {isa = PBXBuildFile; fileRef = AC012F342969EC62004660B9 /* CustomStepper(Combine).swift */; };
+		AC012F352969EC62004660B9 /* CombineStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC012F342969EC62004660B9 /* CombineStepper.swift */; };
 		AC012F37296A0574004660B9 /* CombineCartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC012F36296A0574004660B9 /* CombineCartViewModel.swift */; };
+		AC012F3A296B1BD5004660B9 /* CombineNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC012F39296B1BD5004660B9 /* CombineNetworkManager.swift */; };
+		AC012F3C296B1C32004660B9 /* DataFetchingErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC012F3B296B1C32004660B9 /* DataFetchingErrors.swift */; };
 		AC04F3E1293BAE31008CFD18 /* WebImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC04F3E0293BAE31008CFD18 /* WebImageView.swift */; };
 		AC04F3E3293BB5CC008CFD18 /* UIFont + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC04F3E2293BB5CC008CFD18 /* UIFont + Extension.swift */; };
 		AC04F3E6293BBCF2008CFD18 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC04F3E5293BBCF2008CFD18 /* Constants.swift */; };
@@ -70,8 +72,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		AC012F342969EC62004660B9 /* CustomStepper(Combine).swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomStepper(Combine).swift"; sourceTree = "<group>"; };
+		AC012F342969EC62004660B9 /* CombineStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineStepper.swift; sourceTree = "<group>"; };
 		AC012F36296A0574004660B9 /* CombineCartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineCartViewModel.swift; sourceTree = "<group>"; };
+		AC012F39296B1BD5004660B9 /* CombineNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineNetworkManager.swift; sourceTree = "<group>"; };
+		AC012F3B296B1C32004660B9 /* DataFetchingErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFetchingErrors.swift; sourceTree = "<group>"; };
 		AC04F3E0293BAE31008CFD18 /* WebImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebImageView.swift; sourceTree = "<group>"; };
 		AC04F3E2293BB5CC008CFD18 /* UIFont + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont + Extension.swift"; sourceTree = "<group>"; };
 		AC04F3E5293BBCF2008CFD18 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -145,6 +149,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AC012F38296B1308004660B9 /* Not Used */ = {
+			isa = PBXGroup;
+			children = (
+				AC69E5E02942357700FDD20A /* CartTableViewModel.swift */,
+			);
+			path = "Not Used";
+			sourceTree = "<group>";
+		};
+		AC012F3D296B3051004660B9 /* Not Used */ = {
+			isa = PBXGroup;
+			children = (
+				AC69E5DC29422DD400FDD20A /* CustomStepper.swift */,
+			);
+			path = "Not Used";
+			sourceTree = "<group>";
+		};
+		AC012F3E296B395A004660B9 /* Not Used */ = {
+			isa = PBXGroup;
+			children = (
+				AC587862293B850C00271423 /* NetworkManager+DataFetcher.swift */,
+			);
+			path = "Not Used";
+			sourceTree = "<group>";
+		};
 		AC04F3E4293BBCD6008CFD18 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
@@ -201,7 +229,7 @@
 				AC012F36296A0574004660B9 /* CombineCartViewModel.swift */,
 				AC48427E2942806400090D5E /* CartBottomViewModel.swift */,
 				AC484281294295B300090D5E /* CartCellViewModel.swift */,
-				AC69E5E02942357700FDD20A /* CartTableViewModel.swift */,
+				AC012F38296B1308004660B9 /* Not Used */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -268,9 +296,11 @@
 		AC587867293B8A6900271423 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				AC587862293B850C00271423 /* NetworkManager+DataFetcher.swift */,
+				AC012F39296B1BD5004660B9 /* CombineNetworkManager.swift */,
+				AC012F3B296B1C32004660B9 /* DataFetchingErrors.swift */,
 				AC04F3E0293BAE31008CFD18 /* WebImageView.swift */,
 				ACBABECC2944F02000599417 /* URLs.swift */,
+				AC012F3E296B395A004660B9 /* Not Used */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -399,8 +429,8 @@
 			isa = PBXGroup;
 			children = (
 				AC69E5DA29422AE400FDD20A /* CartTVCell.swift */,
-				AC012F342969EC62004660B9 /* CustomStepper(Combine).swift */,
-				AC69E5DC29422DD400FDD20A /* CustomStepper.swift */,
+				AC012F342969EC62004660B9 /* CombineStepper.swift */,
+				AC012F3D296B3051004660B9 /* Not Used */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -517,6 +547,7 @@
 				AC484282294295B300090D5E /* CartCellViewModel.swift in Sources */,
 				AC04F3F6293CDC0C008CFD18 /* HeaderWithoutButton.swift in Sources */,
 				AC413D5E29412B7F0070DB57 /* ProductDetailCVCell.swift in Sources */,
+				AC012F3C296B1C32004660B9 /* DataFetchingErrors.swift in Sources */,
 				AC04F3E1293BAE31008CFD18 /* WebImageView.swift in Sources */,
 				AC04F3F4293CD362008CFD18 /* HeaderWithButton.swift in Sources */,
 				AC413D632942289B0070DB57 /* CartTableViewController.swift in Sources */,
@@ -535,13 +566,14 @@
 				AC48427B2942790100090D5E /* UILabel + Extension.swift in Sources */,
 				AC7B986F293E893C0084832A /* RatingStackView.swift in Sources */,
 				AC7B9871293F7BDF0084832A /* ProductDetailMainSegmentedControl.swift in Sources */,
-				AC012F352969EC62004660B9 /* CustomStepper(Combine).swift in Sources */,
+				AC012F352969EC62004660B9 /* CombineStepper.swift in Sources */,
 				AC7B986B293E6A4C0084832A /* ProductDetailsBottomView.swift in Sources */,
 				ACBD004029465D3C00A99B2E /* MainModel.swift in Sources */,
 				AC587865293B89B600271423 /* SelectCategoryCell.swift in Sources */,
 				AC7B987C293FD1F40084832A /* ProductFeaturesViewModel.swift in Sources */,
 				AC04F3F9293D1262008CFD18 /* FilterView.swift in Sources */,
 				AC04F3FB293D2267008CFD18 /* FilterTextFieldFormStackView.swift in Sources */,
+				AC012F3A296B1BD5004660B9 /* CombineNetworkManager.swift in Sources */,
 				AC69E5DD29422DD400FDD20A /* CustomStepper.swift in Sources */,
 				AC7B9876293F9ACF0084832A /* ProductDetailModel.swift in Sources */,
 				AC7B986D293E7BD00084832A /* RatingStarView.swift in Sources */,
