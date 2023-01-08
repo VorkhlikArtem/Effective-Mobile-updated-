@@ -19,7 +19,7 @@ class MainTabBarController: UITabBarController {
         let mainNC = generateNavigationController(rootViewController: MainViewController(), title: "Main", image: "house")
         
         let cartVC = CartTableViewController()
-        cartVC.viewModel = CartTableViewModel()
+        cartVC.viewModel = CombineCartViewModel()
         let cartNC = generateNavigationController(rootViewController: cartVC, title: "Cart", image: "cart")
   
         viewControllers = [mainNC, cartNC]

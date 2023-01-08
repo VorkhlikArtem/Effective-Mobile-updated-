@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC012F352969EC62004660B9 /* CustomStepper(Combine).swift in Sources */ = {isa = PBXBuildFile; fileRef = AC012F342969EC62004660B9 /* CustomStepper(Combine).swift */; };
+		AC012F37296A0574004660B9 /* CombineCartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC012F36296A0574004660B9 /* CombineCartViewModel.swift */; };
 		AC04F3E1293BAE31008CFD18 /* WebImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC04F3E0293BAE31008CFD18 /* WebImageView.swift */; };
 		AC04F3E3293BB5CC008CFD18 /* UIFont + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC04F3E2293BB5CC008CFD18 /* UIFont + Extension.swift */; };
 		AC04F3E6293BBCF2008CFD18 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC04F3E5293BBCF2008CFD18 /* Constants.swift */; };
@@ -68,6 +70,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AC012F342969EC62004660B9 /* CustomStepper(Combine).swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomStepper(Combine).swift"; sourceTree = "<group>"; };
+		AC012F36296A0574004660B9 /* CombineCartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineCartViewModel.swift; sourceTree = "<group>"; };
 		AC04F3E0293BAE31008CFD18 /* WebImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebImageView.swift; sourceTree = "<group>"; };
 		AC04F3E2293BB5CC008CFD18 /* UIFont + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont + Extension.swift"; sourceTree = "<group>"; };
 		AC04F3E5293BBCF2008CFD18 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -194,9 +198,10 @@
 		AC4842802942921300090D5E /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				AC69E5E02942357700FDD20A /* CartTableViewModel.swift */,
+				AC012F36296A0574004660B9 /* CombineCartViewModel.swift */,
 				AC48427E2942806400090D5E /* CartBottomViewModel.swift */,
 				AC484281294295B300090D5E /* CartCellViewModel.swift */,
+				AC69E5E02942357700FDD20A /* CartTableViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -394,6 +399,7 @@
 			isa = PBXGroup;
 			children = (
 				AC69E5DA29422AE400FDD20A /* CartTVCell.swift */,
+				AC012F342969EC62004660B9 /* CustomStepper(Combine).swift */,
 				AC69E5DC29422DD400FDD20A /* CustomStepper.swift */,
 			);
 			path = Cell;
@@ -529,6 +535,7 @@
 				AC48427B2942790100090D5E /* UILabel + Extension.swift in Sources */,
 				AC7B986F293E893C0084832A /* RatingStackView.swift in Sources */,
 				AC7B9871293F7BDF0084832A /* ProductDetailMainSegmentedControl.swift in Sources */,
+				AC012F352969EC62004660B9 /* CustomStepper(Combine).swift in Sources */,
 				AC7B986B293E6A4C0084832A /* ProductDetailsBottomView.swift in Sources */,
 				ACBD004029465D3C00A99B2E /* MainModel.swift in Sources */,
 				AC587865293B89B600271423 /* SelectCategoryCell.swift in Sources */,
@@ -539,6 +546,7 @@
 				AC7B9876293F9ACF0084832A /* ProductDetailModel.swift in Sources */,
 				AC7B986D293E7BD00084832A /* RatingStarView.swift in Sources */,
 				AC48427F2942806400090D5E /* CartBottomViewModel.swift in Sources */,
+				AC012F37296A0574004660B9 /* CombineCartViewModel.swift in Sources */,
 				AC58784F293B743A00271423 /* SceneDelegate.swift in Sources */,
 				AC587861293B7E7100271423 /* MainParsingModels.swift in Sources */,
 			);

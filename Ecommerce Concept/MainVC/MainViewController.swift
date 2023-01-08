@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 class MainViewController: UIViewController {
     
@@ -44,20 +45,45 @@ class MainViewController: UIViewController {
         getData()
     }
     
+//    private func getData() {
+//        dataFetcher.getMain { [weak self] mainResponse in
+//            guard let self = self else {return}
+//            guard let mainResponse = mainResponse else { self.refreshControl.endRefreshing()
+//                return}
+//            self.model.hotSalesItem = mainResponse.homeStore
+//            self.model.bestSellerItem = mainResponse.bestSeller
+//            DispatchQueue.main.async {
+//                self.reloadData()
+//                let numberOfItems = self.dataSource.snapshot().numberOfItems(inSection: .hotSalesSection)
+//                self.hotSalesFooter?.configure(numberOfPages: numberOfItems)
+//                self.refreshControl.endRefreshing()
+//            }
+//        }
+//    }
+    
+    var cancellables: Set<AnyCancellable> = []
+    
     private func getData() {
-        dataFetcher.getMain { [weak self] mainResponse in
-            guard let self = self else {return}
-            guard let mainResponse = mainResponse else { self.refreshControl.endRefreshing()
-                return}
-            self.model.hotSalesItem = mainResponse.homeStore
-            self.model.bestSellerItem = mainResponse.bestSeller
-            DispatchQueue.main.async {
+        dataFetcher.getMain1()
+            .sink { [weak self] completion in
+                switch completion {
+                case .finished: break
+                case .failure(let error):
+                    self?.refreshControl.endRefreshing()
+                    print(error.localizedDescription)
+                }
+            } receiveValue: { [weak self] mainResponse in
+                guard let self = self else {return}
+                self.model.hotSalesItem = mainResponse.homeStore
+                self.model.bestSellerItem = mainResponse.bestSeller
                 self.reloadData()
+                
                 let numberOfItems = self.dataSource.snapshot().numberOfItems(inSection: .hotSalesSection)
                 self.hotSalesFooter?.configure(numberOfPages: numberOfItems)
                 self.refreshControl.endRefreshing()
             }
-        }
+            .store(in: &cancellables)
+
     }
     
     // MARK: - Setup Refresh Control

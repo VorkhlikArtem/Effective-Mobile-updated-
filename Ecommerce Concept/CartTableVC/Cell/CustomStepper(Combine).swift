@@ -1,21 +1,24 @@
 //
-//  CustomStepper.swift
+//  CustomStepper(Combine).swift
 //  EcommerceConcept
 //
-//  Created by Артём on 08.12.2022.
+//  Created by Артём on 07.01.2023.
 //
 
 import UIKit
+import Combine
 
-protocol CustomStepperDelegate: AnyObject {
-    func valueChanged(_ stepper: CustomStepper, value: Int)
-}
-
-class CustomStepper: UIStackView {
+class CombineStepper: UIStackView {
     
-    var count: Int = 1
+    @Published private var count: Int = 1
+    private let countChangedSubject = PassthroughSubject<Int, Never>()
+    var countChangedPublisher: AnyPublisher<Int, Never> {
+        countChangedSubject.eraseToAnyPublisher()
+    }
     
-    weak var delegate: CustomStepperDelegate?
+    var cancellables: Set<AnyCancellable> = []
+    
+   // weak var delegate: CustomStepperDelegate?
     
     private let plusButton: UIButton = {
         let button = UIButton(type: .system)
@@ -51,10 +54,15 @@ class CustomStepper: UIStackView {
         distribution = .fillEqually
         countLabel.text = String(count)
         setOpacity()
-        
         addArrangedSubview(minusButton)
         addArrangedSubview(countLabel)
         addArrangedSubview(plusButton)
+        
+        $count.receive(on: DispatchQueue.main).sink { [weak self] count in
+            self?.countLabel.text = String(count)
+            self?.setOpacity()
+        }
+        .store(in: &cancellables)
     }
     
     override func layoutSubviews() {
@@ -65,9 +73,9 @@ class CustomStepper: UIStackView {
     
     func configure(with count: Int) {
         self.count = count
-        countLabel.text = String(count)
-        
-        setOpacity()
+//        countLabel.text = String(count)
+//
+//        setOpacity()
     }
     
     @objc private func buttonTapped(button : UIButton) {
@@ -76,9 +84,10 @@ class CustomStepper: UIStackView {
         } else if count != 1 {
             count -= 1
         }
-        countLabel.text = String(count)
-        setOpacity()
-        delegate?.valueChanged(self, value: count)
+        countChangedSubject.send(count)
+//        countLabel.text = String(count)
+//        setOpacity()
+//        delegate?.valueChanged(self, value: count)
     }
     
     private func setOpacity() {
@@ -92,4 +101,5 @@ class CustomStepper: UIStackView {
     
  
 }
+
 
