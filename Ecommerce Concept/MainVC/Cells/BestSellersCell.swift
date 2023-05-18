@@ -56,11 +56,9 @@ class BestSellerCell: UICollectionViewCell {
     
     let likeButton: UIButton = {
         let button = UIButton(type: .system)
-        
         button.backgroundColor = .white
         button.tintColor = .red
         button.setImage(UIImage(named: "unselected"), for: .normal)
-        
         return button
     }()
     
@@ -141,8 +139,8 @@ class BestSellerCell: UICollectionViewCell {
         self.contentView.insertSubview(likeButton, aboveSubview: bestSellersImageView)
         NSLayoutConstraint.activate([
           
-            likeButton.heightAnchor.constraint(equalToConstant: 25),
-            likeButton.widthAnchor.constraint(equalToConstant: 25),
+            likeButton.heightAnchor.constraint(equalToConstant: 40),
+            likeButton.widthAnchor.constraint(equalToConstant: 40),
             likeButton.topAnchor.constraint(equalTo: topAnchor, constant: 10),
             likeButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12)
         ])
